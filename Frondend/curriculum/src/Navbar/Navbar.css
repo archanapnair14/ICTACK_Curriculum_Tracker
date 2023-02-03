@@ -1,0 +1,33 @@
+.navbar{
+   
+    display: flex;
+   
+    font-family: 'Josefin Sans', sans-serif;
+    padding: .3em;
+    background-color: #e3f2fd;
+  
+}
+.logo{
+    width: 50px;
+    height:50px;
+    margin: .5em;
+  
+}
+
+
+
+
+.navLeft{
+    flex:4;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+.navRight{
+  flex:8;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+
