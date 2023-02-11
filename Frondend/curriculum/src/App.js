@@ -1,49 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Curriculum from "./components/CurriculumForm";
+import Home from "./components/Home";
+import Requirements from "./components/Registration";
+import LoginPage from "./components/SignIn";
+import SignUp from "./components/Signup";
+import View from "./components/ViewCurriculum";
 
-import Login from './components/Login';
-import NavbarAdmin from './Navbar/NavbarAdmin';
-import { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes
-} from 'react-router-dom';
-import Navbar from './Navbar/Navbar';
+const App = () => {
+  return (
+    <>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/login" element={<LoginPage/>} />
+        <Route exact path="/requirements" element={<Requirements/>} />
+        <Route exact path="/signup" element={<SignUp/>} />
+        <Route exact path="/curriculum/:id" element={<Curriculum/>} />
+        <Route exact path="/view" element={<View/>} />
 
-function App() {
-  var [loggedin, setloggedin] = useState(0)
- 
-  console.log("lin",loggedin)
-  
-  const setlogin = (l) => {
-    setloggedin(l)
-  }
 
-  if(loggedin===1)
-  {
-    return (
-    <Router>
-    <div className="App">
-      <NavbarAdmin   setlogin={setlogin} />
-      
-    </div>
-    </Router>
-     );
-    }
-    else{
-      return (
-        
-      <Router>
-      <div className="App">
-        <Navbar/>
-        <Routes>
-        <Route path="/login" element={<Login setlogin={setlogin}/>} />
-        </Routes>
-        </div>
-        </Router>
+
+
+      </Routes>
+    </>
   );
-}
-}
-export default App;
+};
 
+export default App;
