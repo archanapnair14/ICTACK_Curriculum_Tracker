@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Curriculum from "./components/CurriculumForm";
 import Home from "./components/Home";
-import Requirements from "./components/Registration";
+import Requirements from "./components/Requirements";
 import LoginPage from "./components/SignIn";
 import SignUp from "./components/Signup";
 import View from "./components/ViewCurriculum";
