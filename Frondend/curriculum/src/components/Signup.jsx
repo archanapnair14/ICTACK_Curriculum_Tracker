@@ -1,46 +1,122 @@
-import React from 'react'
+import React from "react";
+import TextField from "@mui/material/TextField";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Signup = () => {
+
+
+const SignUp = () => {
+    const navigate = useNavigate();
+   const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+    const name = data.name;
+    const email = data.email;
+    const password = data.password;
+    console.log(name);
+
+    reset();
+
+    axios
+      .post(`http://localhost:3001/register/`, { name, email, password })
+      .then(() => {
+        navigate("/");
+      });
+  };
   return (
-    <section class="vh-100" style={{backgroundColor:' #508bfc'}}>
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong" style={{borderRadius: '1rem'}}>
-            <div class="card-body p-5 text-center">
-  
-              <h3 class="mb-5">Sign Up</h3>
-              <div class="form-outline mb-4" style={{textAlign:'left'}} >
-                <input type="text" id="typeEmailX-2" name="name" class="form-control form-control-lg" onChange={handleChange} value={formValues.name} required/>
-                <label class="form-label" for="typeEmailX-2">Name</label>
-              </div>
-  
-              <div class="form-outline mb-4" style={{textAlign:'left'}} >
-                <input type="email" id="typeEmailX-2" name="email" class="form-control form-control-lg" onChange={handleChange} value={formValues.email} required/>
-                <label class="form-label" for="typeEmailX-2">Username</label>
-              </div>
-  
-              <div class="form-outline mb-4" style={{textAlign:'left'}} >
-                <input type="password" id="typePasswordX-2" name="password" class="form-control form-control-lg" onChange={handleChange} value={formValues.password} required/>
-                <label class="form-label" for="typePasswordX-2">Password</label>
-              </div>
-  
-             
-              
-              <button class="btn btn-primary btn-lg btn-block" type="submit" onClick={authenticate}>Login</button>
-  <br></br>
-  <a href="/signup">Back to Login</a>
-              <hr class="my-4"/>
-  
-              
-  
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  )
-}
+    <>
+      <Container maxWidth="xs">
+        <h1>Sign Up</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box
+            mb={2}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              label="name"
+              name="name"
+              fullWidth
+              autoComplete="name"
+              autoFocus
+              {...register("name", {
+                required: "Required field",
+                minLength: {
+                  value: 4,
+                  message: "Name must be minimum four characters",
+                },
+              })}
+              error={!!errors?.name}
+              helperText={errors?.name ? errors.name.message : null}
+            />
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              label="email"
+              name="email"
+              fullWidth
+              autoComplete="email"
+              autoFocus
+              {...register("email", {
+                required: "Required field",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              error={!!errors?.email}
+              helperText={errors?.email ? errors.email.message : null}
+            />
+            <TextField
+              sx={{ mt: 5 }}
+              variant="outlined"
+              label="password"
+              type="password"
+              name="password"
+              fullWidth
+              autoComplete="password"
+              autoFocus
+              {...register("password", {
+                required: "Required field",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters",
+                },
+              })}
+              error={!!errors?.password}
+              helperText={errors?.password && errors.password.message}
+            />
+          </Box>
 
-export default Signup
+          <Button
+            sx={{ mt: 3 }}
+            type="submit"
+            variant="contained"
+            color="success"
+            fullWidth
+          >
+            Sign Up
+          </Button>
+        </form>
+      </Container>
+    </>
+  );
+};
+
+export default SignUp;

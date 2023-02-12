@@ -1,33 +1,20 @@
-const mongoose = require('mongoose');
-let mongooseSchema=mongoose.Schema;
-const requirementSchema=new mongooseSchema(
-    {
-    title:
-    {
-        type: String,
-        required: true
-    },
-   type:
-   {
+const Mongoose = require("mongoose");
+const requirementSchema = Mongoose.Schema({
+  title: {
     type: String,
-    required: true
-},
-    category:
-    {
-        type: String,
-        required: true
-    },
-    organisation:
-    {
-        type: String,
-        required: true
-    },
-    image:
-    {
-        type: String,
-        required: true
-    }
-}
-);
-var requirementModelObj=mongoose.model("requirements",requirementSchema);
-module.exports = requirementModelObj;
+  },
+  type: {
+    type: String,
+  },
+  category: {
+    type: String,
+  },
+  organisation: {
+    type: String,
+  },
+  hours:{
+    type: Number,
+  }
+});
+var requirementModelObj = Mongoose.model("requirements", requirementSchema);
+module.exports = { requirementModelObj };
