@@ -150,6 +150,44 @@ app.put("/requirements", (req, res) => {
   });
 });
 
+app.get("/curriculum", (req, res) => {
+  curriculumModel.find((err, data) => {
+    if (err) {
+      res.json({
+        status: "error",
+        error: err,
+      });
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+app.put("/curriculum", (req, res) => {
+  var id = req.body.reqid;
+  var data = req.body;
+  curriculumModel.findOneAndUpdate({ id:id }, data, (err, data) => {
+    if (err) {
+      res.json({ status: "error", error: err });
+    } else {
+      res.json({ status: "updated", data: data });
+    }
+  });
+});
+
+
+
+app.delete("/curriculum/:id", async (req, res) => {
+  try {
+    var id = req.params.id;
+    var data = req.body;
+    const result = await curriculumModel.findOneAndDelete({ _id: id }, data);
+    res.send(result);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 const port = process.env.PORT || 3001;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

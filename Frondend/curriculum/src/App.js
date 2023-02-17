@@ -6,11 +6,13 @@ import Requirements from "./components/Requirements";
 import LoginPage from "./components/SignIn";
 import SignUp from "./components/Signup";
 import View from "./components/ViewCurriculum";
+import Readcurriclum from "./components/Readcurriclum";
 
 const App = () => {
   return (
     <>
-      <Routes>
+       <Readcurriclum />
+      {/* <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<LoginPage/>} />
         <Route exact path="/requirements" element={<Requirements/>} />
@@ -21,7 +23,7 @@ const App = () => {
 
 
 
-      </Routes>
+      </Routes> */}
     </>
   );
 };
