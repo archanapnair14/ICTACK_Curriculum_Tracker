@@ -39,6 +39,7 @@ const Curriculum = () => {
     formData.append("reqid", id);
     formData.append("userId", userId);
     formData.append("file", file);
+    formData.append("status",'');
 
     fetch("http://localhost:3001/curriculum", {
       method: "POST",

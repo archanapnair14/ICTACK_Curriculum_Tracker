@@ -9,17 +9,30 @@ import Paper from "@mui/material/Paper";
 import Navbar from "../Navbar/Navbar";
 import { Button } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const View = () => {
   const [APIData, setAPIData] = useState([]);
+  const [curData, setcurData] = useState([]);
+  const inputref = useRef();
+  console.log(inputref);
+  const id = localStorage.getItem("userId");
+  console.log(id);
   useEffect(() => {
     axios.get(`http://localhost:3001/requirements`).then((response) => {
       console.log(response.data);
       setAPIData(response.data);
     });
   }, []);
+
+  
+  // axios
+  //   .get(`http://localhost:3001/curriculum/${id}/${inputref}`)
+  //   .then((response) => {
+  //     console.log(response.data);
+  //     setcurData(response.data);
+  //   });
 
   return (
     <>
@@ -52,8 +65,15 @@ const View = () => {
                 <TableCell align="right">{data.organisation}</TableCell>
                 <TableCell align="right">{data.hours}</TableCell>
                 <TableCell align="right">
+                  <input
+                    ref={inputref}
+                    value={data._id}
+                    style={{ display: "none" }}
+                  />
                   <Link to={`/curriculum/${data._id}`}>
-                    <Button>View</Button>
+                    <Button disabled={curData.status === "pending"}>
+                      Respond
+                    </Button>
                   </Link>
                 </TableCell>
               </TableRow>

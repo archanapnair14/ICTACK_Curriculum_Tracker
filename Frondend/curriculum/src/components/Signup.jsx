@@ -7,12 +7,12 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import Typography from "@mui/material/Typography";
 
 
 const SignUp = () => {
-    const navigate = useNavigate();
-   const {
+  const navigate = useNavigate();
+  const {
     register,
     handleSubmit,
     reset,
@@ -36,7 +36,6 @@ const SignUp = () => {
   return (
     <>
       <Container maxWidth="xs">
-        <h1>Sign Up</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box
             mb={2}
@@ -47,6 +46,14 @@ const SignUp = () => {
               alignItems: "center",
             }}
           >
+            <Typography
+              gutterBottom
+              variant="h4"
+              fontFamily="cursive"
+              component="div"
+            >
+              SignUp
+            </Typography>
             <TextField
               sx={{ mt: 3 }}
               variant="outlined"

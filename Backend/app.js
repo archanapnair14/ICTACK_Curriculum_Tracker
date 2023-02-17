@@ -21,14 +21,12 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `${file.fieldname}-${Date.now()}.${ext}`);
   },
 });
 
-// const upload = multer({ storage: storage });
-const upload = multer({
-  dest: "uploads/",
-});
+const upload = multer({ storage: storage });
 
 // Connect Database
 connectDB();
@@ -115,7 +113,8 @@ app.post("/curriculum", upload.single("file"), async(req, res) => {
     comment: req.body.comment,
     reqid: req.body.reqid,
     userId: req.body.userId,
-    file: req.file.originalname,
+    file: req.file.filename,
+    status:"pending",
   });
 
   console.log(req.file.originalname);
@@ -124,6 +123,19 @@ app.post("/curriculum", upload.single("file"), async(req, res) => {
   res.json({ status: "success", data: data });
 });
 
+
+app.get("/curriculum/:id/:reqid", async (req, res) => {
+  const userid = req.body.userId;
+  const reqid = req.body.reqid;
+
+  try{
+    const data = await curriculumModel.findOne(userid,reqid);
+    res.json(data)
+}
+catch(error){
+    res.status(500).json({message: error.message})
+}
+});
 app.delete("/requirements/:id", async (req, res) => {
   try {
     var id = req.params.id;

@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Typography from "@mui/material/Typography";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -18,13 +19,12 @@ export default function LoginPage() {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    const UserData ={
-      email : data.email,
-      password : data.password,
-    }
-      
+    const UserData = {
+      email: data.email,
+      password: data.password,
+    };
 
-    axios.post(`http://localhost:3001/signin`,UserData).then((response) => {
+    axios.post(`http://localhost:3001/signin`, UserData).then((response) => {
       console.log(response.data);
 
       reset();
@@ -36,7 +36,7 @@ export default function LoginPage() {
         console.log(useremail);
 
         localStorage.setItem("userToken", token);
-        localStorage.setItem("userId",userId);
+        localStorage.setItem("userId", userId);
 
         if (useremail === "admin@gmail.com") {
           navigate("/");
@@ -51,7 +51,6 @@ export default function LoginPage() {
 
   return (
     <Container maxWidth="xs">
-      <h1>Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box
           mb={2}
@@ -62,6 +61,14 @@ export default function LoginPage() {
             alignItems: "center",
           }}
         >
+          <Typography
+            gutterBottom
+            variant="h4"
+            fontFamily="cursive"
+            component="div"
+          >
+            Login
+          </Typography>
           <TextField
             sx={{ mt: 1 }}
             variant="outlined"

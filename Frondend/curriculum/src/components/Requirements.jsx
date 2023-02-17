@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Typography from "@mui/material/Typography";
+
 
 const Requirements = () => {
   const navigate = useNavigate();
@@ -43,7 +45,6 @@ const Requirements = () => {
   return (
     <>
       <Container maxWidth="xs">
-        <h1>Add Requirements</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box
             mb={2}
@@ -54,6 +55,14 @@ const Requirements = () => {
               alignItems: "center",
             }}
           >
+            <Typography
+              gutterBottom
+              variant="h4"
+              fontFamily="cursive"
+              component="div"
+            >
+              Add Requirements
+            </Typography>
             <TextField
               sx={{ mt: 3 }}
               variant="outlined"
@@ -133,8 +142,8 @@ const Requirements = () => {
               {...register("hours", {
                 required: "Required field",
               })}
-              error={!!errors?.iname}
-              helperText={errors?.iname ? errors.iname.message : null}
+              error={!!errors?.hours}
+              helperText={errors?.hours ? errors.hours.message : null}
             />
           </Box>
 

@@ -12,6 +12,9 @@ const curriculumSchema = Mongoose.Schema({
   },
   file:{
     type: String,
+  },
+  status:{
+    type: String,
   }
 });
 const curriculumModel = Mongoose.model("curriculum", curriculumSchema);
