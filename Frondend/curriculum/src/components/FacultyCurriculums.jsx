@@ -99,11 +99,8 @@ const MyCard = () => {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                {/* <Button onClick={() => downloadPdf(data._id)} size="small" color="primary">
-                  Download
-                </Button> */}
-                  <Button onClick={()=>handleDownload(data._id)} size="small" color="primary">
-                  Download
+                  <Button onClick={()=>handleDownload(data._id)} size="small" color="primary" disabled={loading}>
+                  {loading ? "Downloading..." : "Download"}
                 </Button> 
               
               </CardActions>
