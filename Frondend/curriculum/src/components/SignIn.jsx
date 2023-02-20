@@ -41,7 +41,7 @@ export default function LoginPage() {
         if (useremail === "admin@gmail.com") {
           navigate("/");
         } else {
-          navigate("/signup");
+          navigate("/");
         }
       } else {
         alert("Invalid user");
@@ -113,7 +113,7 @@ export default function LoginPage() {
           color="primary"
           fullWidth
         >
-          Login In
+          LogIn
         </Button>
       </form>
     </Container>

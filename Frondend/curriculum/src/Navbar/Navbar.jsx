@@ -1,5 +1,15 @@
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("userId");
+    navigate("/");
+    window.location.reload()
+  };
   return (
     <>
       <div>
@@ -63,9 +73,19 @@ const Navbar = () => {
                     className="nav-link  active"
                     aria-current="page"
                   >
+                    View Requirements
+                  </Link>
+                </li>
+                <li class="nav-item">
+                  <Link
+                    to="/read"
+                    className="nav-link  active"
+                    aria-current="page"
+                  >
                     View Curriculum
                   </Link>
                 </li>
+                <Button style={{ color: '#fff'}} onClick={handleLogout}>SignOut</Button>
               </ul>
             </div>
           </div>

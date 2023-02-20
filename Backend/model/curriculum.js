@@ -5,17 +5,18 @@ const curriculumSchema = Mongoose.Schema({
     type: String,
   },
   reqid: {
-    type: String,
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: "requirements",
   },
   userId: {
     type: String,
   },
-  file:{
+  file: {
     type: String,
   },
-  status:{
+  status: {
     type: String,
-  }
+  },
 });
 const curriculumModel = Mongoose.model("curriculum", curriculumSchema);
 module.exports = { curriculumModel };

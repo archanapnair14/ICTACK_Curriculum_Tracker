@@ -11,28 +11,29 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import Typography from "@mui/material/Typography";
 
 const View = () => {
   const [APIData, setAPIData] = useState([]);
-  const [curData, setcurData] = useState([]);
-  const inputref = useRef();
-  console.log(inputref);
-  const id = localStorage.getItem("userId");
-  console.log(id);
+  const [curData, setCurData] = useState([]);
+
+  const userId = localStorage.getItem("userId");
+  console.log(userId);
   useEffect(() => {
     axios.get(`http://localhost:3001/requirements`).then((response) => {
       console.log(response.data);
       setAPIData(response.data);
     });
+    axios.get(`http://localhost:3001/curriculum/`).then((response) => {
+      console.log(response.data);
+      setCurData(response.data);
+    });
   }, []);
 
-  
-  // axios
-  //   .get(`http://localhost:3001/curriculum/${id}/${inputref}`)
-  //   .then((response) => {
-  //     console.log(response.data);
-  //     setcurData(response.data);
-  //   });
+  // const getUserCurriculum = (userId) => {
+  //   return curData.filter((cur) => cur.userId === userId);
+  // };
+  // console.log(getUserCurriculum);
 
   return (
     <>
@@ -44,7 +45,7 @@ const View = () => {
               <TableCell component="th" scope="row">
                 Name Of Requirement
               </TableCell>
-              <TableCell>Area Of Training</TableCell>
+              <TableCell align="right">Area Of Training</TableCell>
               <TableCell align="right">category</TableCell>
               <TableCell align="right">Organisation/Institution</TableCell>
               <TableCell align="right">No Of Hours</TableCell>
@@ -60,21 +61,32 @@ const View = () => {
                 <TableCell component="th" scope="row">
                   {data.title}
                 </TableCell>
-                <TableCell>{data.type}</TableCell>
+                <TableCell align="right">{data.type}</TableCell>
                 <TableCell align="right">{data.category}</TableCell>
                 <TableCell align="right">{data.organisation}</TableCell>
                 <TableCell align="right">{data.hours}</TableCell>
                 <TableCell align="right">
-                  <input
-                    ref={inputref}
-                    value={data._id}
-                    style={{ display: "none" }}
-                  />
+
                   <Link to={`/curriculum/${data._id}`}>
-                    <Button disabled={curData.status === "pending"}>
-                      Respond
-                    </Button>
+                    <Button>Respond</Button>
                   </Link>
+                  
+                  {/* {!curData || data.status === "Approved"? ( */}
+                  {/* {!curData ? (
+
+                    <Link to={`/curriculum/${data._id}`}>
+                      <Button>Respond</Button>
+                    </Link>
+                  ) : (
+                    <Typography variant="body2" color="text.secondary">
+                      Already Responded
+                    </Typography>
+                  )}
+                  {curData && data.status === "pending" && (
+                    <Link to={`/curriculum/${data._id}`}>
+                      <Button>Edit</Button>
+                    </Link>
+                  )} */}
                 </TableCell>
               </TableRow>
             ))}

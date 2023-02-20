@@ -5,6 +5,7 @@ const BodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
+const Mongoose = require("mongoose");
 
 const { userModel } = require("./model/users");
 const { requirementModelObj } = require("./model/registration");
@@ -108,13 +109,13 @@ app.get("/requirements", (req, res) => {
   });
 });
 
-app.post("/curriculum", upload.single("file"), async(req, res) => {
+app.post("/curriculum", upload.single("file"), async (req, res) => {
   let data = new curriculumModel({
     comment: req.body.comment,
     reqid: req.body.reqid,
     userId: req.body.userId,
     file: req.file.filename,
-    status:"pending",
+    status: "pending",
   });
 
   console.log(req.file.originalname);
@@ -123,19 +124,17 @@ app.post("/curriculum", upload.single("file"), async(req, res) => {
   res.json({ status: "success", data: data });
 });
 
+// app.get("/curriculum/:id/:reqid", async (req, res) => {
+//   const userid = req.body.userId;
+//   const reqid = req.body.reqid;
 
-app.get("/curriculum/:id/:reqid", async (req, res) => {
-  const userid = req.body.userId;
-  const reqid = req.body.reqid;
-
-  try{
-    const data = await curriculumModel.findOne(userid,reqid);
-    res.json(data)
-}
-catch(error){
-    res.status(500).json({message: error.message})
-}
-});
+//   try {
+//     const data = await curriculumModel.findOne(userid, reqid);
+//     res.json(data);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
 app.delete("/requirements/:id", async (req, res) => {
   try {
     var id = req.params.id;
@@ -160,6 +159,100 @@ app.put("/requirements", (req, res) => {
       res.json({ status: "updated", data: data });
     }
   });
+});
+
+app.get("/curriculum", async (req, res) => {
+  try {
+    const curriculum = await curriculumModel.find().populate("reqid");
+    res.json(curriculum);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+app.get("/curriculum/:userId/Approved", async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const curriculum = await curriculumModel
+      .find({ userId: userId, status: "Approved" })
+      .populate("reqid");
+    if (!curriculum) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.json(curriculum);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+app.get("/curriculum/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const curriculum = await curriculumModel
+      .find({ userId: userId })
+      .populate("reqid");
+    if (!curriculum) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.json(curriculum);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+app.get("/curriculum/Approved", async (req, res) => {
+  try {
+    const curriculum = await curriculumModel
+      .find({ status: 'Approved'})
+      .populate("reqid");
+    if (!curriculum) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.json(curriculum);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+// app.put("/curriculum/:id", (req, res) => {
+//   var id = req.params.id;
+//   var data = req.body;
+//   curriculumModel.findOneAndUpdate({ _id: id }, data, (err, data) => {
+//     if (err) {
+//       res.json({ status: "error", error: err });
+//     } else {
+//       res.json({ status: "updated", data: data });
+//     }
+//   });
+// });
+app.patch("/curriculum/:id", async (req, res) => {
+  try {
+    const data = await curriculumModel.findByIdAndUpdate(
+      req.params.id,
+      { status: req.body.status },
+      { new: true }
+    );
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+app.delete("/curriculum/:id", async (req, res) => {
+  try {
+    var id = req.params.id;
+    var data = req.body;
+    const result = await curriculumModel.findOneAndDelete({ _id: id }, data);
+    res.send(result);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 const port = process.env.PORT || 3001;

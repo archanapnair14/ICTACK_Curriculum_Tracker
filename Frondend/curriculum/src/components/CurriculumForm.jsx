@@ -50,6 +50,7 @@ const Curriculum = () => {
         console.log(data);
       });
       reset();
+      navigate('/view')
   };
 
   return (
