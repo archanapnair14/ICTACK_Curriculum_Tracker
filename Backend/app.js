@@ -5,7 +5,6 @@ const BodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
-const Mongoose = require("mongoose");
 
 const { userModel } = require("./model/users");
 const { requirementModelObj } = require("./model/registration");
@@ -33,6 +32,8 @@ const upload = multer({ storage: storage });
 connectDB();
 
 //API Calls
+
+//SignIn API
 
 app.post("/signin", async (req, res) => {
   var getEmail = req.body.email;
@@ -64,7 +65,9 @@ app.post("/signin", async (req, res) => {
   });
 });
 
-//Signup
+
+//Signup API
+
 app.post("/register", async (req, res) => {
   console.log(req.body);
   console.log(req.body);
@@ -78,6 +81,8 @@ app.post("/register", async (req, res) => {
 
   res.json({ status: "success", data: data });
 });
+
+//Requirement Form API
 
 app.post("/requirements", async (req, res) => {
   console.log(req.body);
@@ -96,6 +101,8 @@ app.post("/requirements", async (req, res) => {
   }
 });
 
+//Requirement Fetch API
+
 app.get("/requirements", (req, res) => {
   requirementModelObj.find((err, data) => {
     if (err) {
@@ -108,6 +115,9 @@ app.get("/requirements", (req, res) => {
     }
   });
 });
+
+
+//Curriculum Form API
 
 app.post("/curriculum", upload.single("file"), async (req, res) => {
   let data = new curriculumModel({
@@ -124,17 +134,7 @@ app.post("/curriculum", upload.single("file"), async (req, res) => {
   res.json({ status: "success", data: data });
 });
 
-// app.get("/curriculum/:id/:reqid", async (req, res) => {
-//   const userid = req.body.userId;
-//   const reqid = req.body.reqid;
 
-//   try {
-//     const data = await curriculumModel.findOne(userid, reqid);
-//     res.json(data);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
 app.delete("/requirements/:id", async (req, res) => {
   try {
     var id = req.params.id;
@@ -161,6 +161,8 @@ app.put("/requirements", (req, res) => {
   });
 });
 
+//Curriculum Fetch API
+
 app.get("/curriculum", async (req, res) => {
   try {
     const curriculum = await curriculumModel.find().populate("reqid");
@@ -170,6 +172,8 @@ app.get("/curriculum", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+//Curriculum Fetch API with specific userid and status Approved
 
 app.get("/curriculum/:userId/Approved", async (req, res) => {
   const userId = req.params.userId;
@@ -186,6 +190,8 @@ app.get("/curriculum/:userId/Approved", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+//Curriculum Fetch API with specific userid
 
 app.get("/curriculum/:userId", async (req, res) => {
   const userId = req.params.userId;
@@ -204,13 +210,15 @@ app.get("/curriculum/:userId", async (req, res) => {
   }
 });
 
+//Curriculum Fetch API with status Approved
+
 app.get("/curriculums", async (req, res) => {
   try {
     const curriculum = await curriculumModel
       .find({ status: "Approved" })
       .populate("reqid");
     if (!curriculum) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "No Approved Curriculums" });
     }
     return res.json(curriculum);
   } catch (err) {
@@ -218,6 +226,8 @@ app.get("/curriculums", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+//Update API for curriculum
 
 // app.put("/curriculum/:id", (req, res) => {
 //   var id = req.params.id;
@@ -230,6 +240,9 @@ app.get("/curriculums", async (req, res) => {
 //     }
 //   });
 // });
+
+//Update API for curriculum status
+
 app.patch("/curriculum/:id", async (req, res) => {
   try {
     const data = await curriculumModel.findByIdAndUpdate(
@@ -243,6 +256,8 @@ app.patch("/curriculum/:id", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+//Delete API for curriculum
 
 app.delete("/curriculum/:id", async (req, res) => {
   try {
