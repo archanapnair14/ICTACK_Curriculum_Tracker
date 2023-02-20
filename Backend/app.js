@@ -272,27 +272,48 @@ app.delete("/curriculum/:id", async (req, res) => {
 
 //File Download API
 
-app.get("/files/:id", async(req, res) => {
+app.get("/files/:id", async (req, res) => {
   const fileId = req.params.id;
   try {
-        const file = await curriculumModel.findById(fileId);
-        if (!file) {
-          return res.status(404).send('File not found');
-        }
-        const filepath = file.path
-        const filePath = filepath;
-  
-  if (fs.existsSync(filePath)) {
-    const file = fs.readFileSync(filePath);
-    res.contentType("application/pdf");
-    res.send(file);
-  } else {
-    res.status(404).send("File not found");
-  }
-} catch (err) {
-      console.error(err);
-      res.status(500).send('Internal server error');
+    const file = await curriculumModel.findById(fileId);
+    if (!file) {
+      return res.status(404).send("File not found");
     }
+    const filepath = file.path;
+    const filePath = filepath;
+
+    if (fs.existsSync(filePath)) {
+      const file = fs.readFileSync(filePath);
+      res.contentType("application/pdf");
+      res.send(file);
+    } else {
+      res.status(404).send("File not found");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
+});
+
+app.get("/search", async (req, res) => {
+  const query = req.query.q;
+
+  const results = await curriculumModel
+    .find()
+    .populate({
+      path: "reqid",
+      match:{
+        $or: [
+         {title: { $regex: query, $options: "i"  }},
+         {type: { $regex: query, $options: 'i' } },
+         {organisation: { $regex: query, $options: 'i' } },
+         {category: { $regex: query, $options: 'i' } },
+        ],
+      }
+    })
+    .exec();
+  const filteredResults = results.filter((result) => result.reqid !== null);
+  res.json(filteredResults);
 });
 
 const port = process.env.PORT || 3001;

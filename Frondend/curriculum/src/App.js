@@ -10,6 +10,7 @@ import View from "./components/ViewRequirements";
 import MyCard from "./components/FacultyCurriculums";
 import AllCurriculums from "./components/ApprovedCurriculums";
 import LogoutButton from "./components/LogOut";
+import Searchtab from "./components/Searchtab";
 
 const App = () => {
   const userid = localStorage.getItem("userId");
@@ -39,7 +40,7 @@ const App = () => {
         <Route
           exact
           path="/approved"
-          element={userid ? <MyCard /> : <Home />}
+          element={userid ? <Searchtab/> : <Home />}
         />
         <Route
           exact

@@ -20,33 +20,31 @@ const AllCurriculums = () => {
   return (
     <>
       <Navbar />
-      <div>
-        <div style={{ display: "flex", padding: "10px",}}>
+      <div style={{padding:"20px"}}>
           {CurData.map((data) => (
-            <Card
-              sx={{
-                maxWidth: 345,
-                marginTop: "30px",
-                backgroundColor: "grey",
-                color: "#fff",
-              }}
-            >
-              <CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {data.reqid.title}
+          <div style={{ display: "flex"}}>
+            <Card sx={{ width:"25%", marginTop: "30px",padding:'30px',backgroundColor:'beige',border:'2px solid',display:"flex",justifyContent:'space-evenly',alignContent:'space-between'}}>
+           <CardActionArea>
+             <CardContent>
+                  <Typography gutterBottom variant="body1" fontSize='18px' component='div'>
+                    Requiremnet Name : {data.reqid.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {data.comment}
+                
+                  <Typography gutterBottom variant="body1" fontSize='18px'>
+                    Type : {data.reqid.type}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {data.status}
+                  <Typography gutterBottom variant="body1" fontSize='18px'>
+                    Category : {data.reqid.category}
                   </Typography>
-                </CardContent>
+                  <Typography gutterBottom variant="body1" fontSize='18px'>
+                    Comment : {data.comment}
+                  </Typography>
+               </CardContent>
               </CardActionArea>
             </Card>
+            </div>
+
           ))}
-        </div>
       </div>
     </>
   );

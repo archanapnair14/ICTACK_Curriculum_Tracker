@@ -65,14 +65,12 @@ const Readcurriclum = () => {
           <TableHead>
             <TableRow>
               <TableCell component="th" scope="row">
-                Name Of Requirement
+                <TableCell>Name Of Requirement</TableCell>
+                <TableCell >Area Of Training</TableCell>
+              <TableCell >category</TableCell>
+              <TableCell >Comments</TableCell>
+              <TableCell >No Of Hours</TableCell>
               </TableCell>
-              <TableCell>Area Of Training</TableCell>
-              <TableCell align="right">category</TableCell>
-              <TableCell align="right">Comments</TableCell>
-              <TableCell align="right">No Of Hours</TableCell>
-              <TableCell align="right">Action</TableCell>
-              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -82,25 +80,28 @@ const Readcurriclum = () => {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <TableCell>{data.reqid.title}</TableCell>
-                  <TableCell>{data.reqid.type}</TableCell>
-                  <TableCell>{data.reqid.category}</TableCell>
-                  <TableCell>{data.comment}</TableCell>
-                  <TableCell>{data.reqid.hours}</TableCell>
-                </TableCell>
+                  <TableCell align="right">{data.reqid.title}</TableCell>
+                  <TableCell align="right">{data.reqid.type}</TableCell>
+                  <TableCell align="right" >{data.reqid.category}</TableCell>
+                  <TableCell align="right" >{data.comment}</TableCell>
+                  <TableCell align="right" >{data.reqid.hours}</TableCell>
                 {/* <TableCell>{data.file}</TableCell> */}
+                </TableCell>
 
-                <TableCell>
+                <TableCell sx={{ marginRight:"40px"}}>
                   {data.status !== "Approved" && (
                     <Button onClick={() => handleApprove(data._id)}>
                       Approve
                     </Button>
                   )}
+                  </TableCell>
+                  <TableCell>
                   <Link to={`/updatecurriclum`}>
                     <Button>update</Button>
                   </Link>
                   <Button onClick={() => onDelete(data._id)}>delete</Button>
                 </TableCell>
+
               </TableRow>
             ))}
           </TableBody>

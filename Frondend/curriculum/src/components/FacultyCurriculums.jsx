@@ -7,6 +7,13 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import Search from "./Search";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const MyCard = () => {
   const [CurData, setData] = useState([]);
@@ -22,43 +29,6 @@ const MyCard = () => {
         setData(response.data);
       });
     }, []);
-
-    // const downloadFile = async (filename) => {
-    //   try {
-    //     const response = await axios.get(`http://localhost:3001/files/${filename}`, {
-    //       responseType: 'blob' // set the response type to 'blob' to download the file as a binary object
-    //     });
-    //     const url = window.URL.createObjectURL(new Blob([response.data]));
-    //     const link = document.createElement('a');
-    //     link.href = url;
-    //     link.setAttribute('download', filename); // set the name of the downloaded file to the original filename
-    //     document.body.appendChild(link);
-    //     link.click();
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
-    // const downloadPdf = (id) => {
-    //   fetch(`http://localhost:3001/files/${id}`)
-    //     .then(response => {
-    //       if (!response.ok) {
-    //         throw new Error('Network response was not ok');
-    //       }
-    //       return response.blob();
-    //     })
-    //     .then(blob => {
-    //       const url = window.URL.createObjectURL(new Blob([blob]));
-    //       const link = document.createElement('a');
-    //       link.href = url;
-    //       link.setAttribute('download',id);
-    //       document.body.appendChild(link);
-    //       link.click();
-    //       link.remove();
-    //     })
-    //     .catch(error => {
-    //       console.error('Error:', error);
-    //     });
-    // }
 
     const handleDownload = async (id) => {
       setLoading(true);
@@ -80,34 +50,37 @@ const MyCard = () => {
     return (
     <>
       <Navbar />
-      {/* <Search/> */}
-      <div>
+      {/* <Searchtab/> */}
+      <div style={{padding:"20px"}}>
         <div style={{ display: "flex", padding: "10px" }}>
           {CurData.map((data) => (
-            <Card sx={{ maxWidth: 345, marginTop: "30px" }}>
+            <Card sx={{ width:"25%", marginTop: "30px",padding:'30px',backgroundColor:'beige'}}>
               <CardActionArea>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {data.reqid.title}
+                  <Typography gutterBottom variant="body1" fontSize='20px' component='div'>
+                    Requirment Name : {data.reqid.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {data.comment}
+                  <Typography gutterBottom variant="body1" fontSize='18px'>
+                    Type : {data.reqid.type}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {data.status}
+                  <Typography gutterBottom variant="body1" fontSize='18px'>
+                    Category : {data.reqid.category}
                   </Typography>
-                </CardContent>
+                  <Typography gutterBottom variant="body1" fontSize='18px'>
+                    Comment : {data.comment}
+                  </Typography>
+               </CardContent>
               </CardActionArea>
-              <CardActions>
+              <CardActions component="div">
                   <Button onClick={()=>handleDownload(data._id)} size="small" color="primary" disabled={loading}>
-                  {loading ? "Downloading..." : "Download"}
+                  {loading ? "Downloading..." : "Download File"}
                 </Button> 
               
               </CardActions>
             </Card>
           ))}
         </div>
-      </div>
+              </div>
     </>
   );
 };
