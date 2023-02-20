@@ -14,6 +14,9 @@ const curriculumSchema = Mongoose.Schema({
   file: {
     type: String,
   },
+  path:{
+    type: String,
+  },
   status: {
     type: String,
   },

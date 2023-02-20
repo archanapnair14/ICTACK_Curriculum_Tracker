@@ -5,6 +5,8 @@ const BodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
 const { userModel } = require("./model/users");
 const { requirementModelObj } = require("./model/registration");
@@ -65,7 +67,6 @@ app.post("/signin", async (req, res) => {
   });
 });
 
-
 //Signup API
 
 app.post("/register", async (req, res) => {
@@ -116,7 +117,6 @@ app.get("/requirements", (req, res) => {
   });
 });
 
-
 //Curriculum Form API
 
 app.post("/curriculum", upload.single("file"), async (req, res) => {
@@ -125,6 +125,7 @@ app.post("/curriculum", upload.single("file"), async (req, res) => {
     reqid: req.body.reqid,
     userId: req.body.userId,
     file: req.file.filename,
+    path: req.file.path,
     status: "pending",
   });
 
@@ -133,7 +134,6 @@ app.post("/curriculum", upload.single("file"), async (req, res) => {
 
   res.json({ status: "success", data: data });
 });
-
 
 app.delete("/requirements/:id", async (req, res) => {
   try {
@@ -268,6 +268,31 @@ app.delete("/curriculum/:id", async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
+});
+
+//File Download API
+
+app.get("/files/:id", async(req, res) => {
+  const fileId = req.params.id;
+  try {
+        const file = await curriculumModel.findById(fileId);
+        if (!file) {
+          return res.status(404).send('File not found');
+        }
+        const filepath = file.path
+        const filePath = filepath;
+  
+  if (fs.existsSync(filePath)) {
+    const file = fs.readFileSync(filePath);
+    res.contentType("application/pdf");
+    res.send(file);
+  } else {
+    res.status(404).send("File not found");
+  }
+} catch (err) {
+      console.error(err);
+      res.status(500).send('Internal server error');
+    }
 });
 
 const port = process.env.PORT || 3001;

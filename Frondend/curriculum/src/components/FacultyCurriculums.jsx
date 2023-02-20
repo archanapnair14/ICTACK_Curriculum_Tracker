@@ -10,6 +10,7 @@ import Search from "./Search";
 
 const MyCard = () => {
   const [CurData, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const id = localStorage.getItem("userId");
   console.log(id);
@@ -20,9 +21,63 @@ const MyCard = () => {
         console.log(response.data);
         setData(response.data);
       });
-  }, []);
+    }, []);
 
-  return (
+    // const downloadFile = async (filename) => {
+    //   try {
+    //     const response = await axios.get(`http://localhost:3001/files/${filename}`, {
+    //       responseType: 'blob' // set the response type to 'blob' to download the file as a binary object
+    //     });
+    //     const url = window.URL.createObjectURL(new Blob([response.data]));
+    //     const link = document.createElement('a');
+    //     link.href = url;
+    //     link.setAttribute('download', filename); // set the name of the downloaded file to the original filename
+    //     document.body.appendChild(link);
+    //     link.click();
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
+    // const downloadPdf = (id) => {
+    //   fetch(`http://localhost:3001/files/${id}`)
+    //     .then(response => {
+    //       if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //       }
+    //       return response.blob();
+    //     })
+    //     .then(blob => {
+    //       const url = window.URL.createObjectURL(new Blob([blob]));
+    //       const link = document.createElement('a');
+    //       link.href = url;
+    //       link.setAttribute('download',id);
+    //       document.body.appendChild(link);
+    //       link.click();
+    //       link.remove();
+    //     })
+    //     .catch(error => {
+    //       console.error('Error:', error);
+    //     });
+    // }
+
+    const handleDownload = async (id) => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`http://localhost:3001/files/${id}`, {
+          responseType: "blob",
+        });
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "file.pdf");
+        document.body.appendChild(link);
+        link.click();
+      } catch (error) {
+        console.error(error);
+      }
+      setLoading(false);
+    };
+    return (
     <>
       <Navbar />
       {/* <Search/> */}
@@ -44,9 +99,13 @@ const MyCard = () => {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button size="small" color="primary">
+                {/* <Button onClick={() => downloadPdf(data._id)} size="small" color="primary">
                   Download
-                </Button>
+                </Button> */}
+                  <Button onClick={()=>handleDownload(data._id)} size="small" color="primary">
+                  Download
+                </Button> 
+              
               </CardActions>
             </Card>
           ))}
