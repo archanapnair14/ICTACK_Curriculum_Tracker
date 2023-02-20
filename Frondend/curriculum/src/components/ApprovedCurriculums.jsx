@@ -11,7 +11,7 @@ const AllCurriculums = () => {
   const [CurData, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/curriculum/Approved`).then((response) => {
+    axios.get(`http://localhost:3001/curriculums`).then((response) => {
       console.log(response.data);
       setData(response.data);
     });

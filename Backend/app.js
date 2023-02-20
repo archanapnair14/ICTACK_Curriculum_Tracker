@@ -204,10 +204,10 @@ app.get("/curriculum/:userId", async (req, res) => {
   }
 });
 
-app.get("/curriculum/Approved", async (req, res) => {
+app.get("/curriculums", async (req, res) => {
   try {
     const curriculum = await curriculumModel
-      .find({ status: 'Approved'})
+      .find({ status: "Approved" })
       .populate("reqid");
     if (!curriculum) {
       return res.status(404).json({ message: "User not found" });
