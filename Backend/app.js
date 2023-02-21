@@ -8,6 +8,7 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
+
 const { userModel } = require("./model/users");
 const { requirementModelObj } = require("./model/registration");
 const { curriculumModel } = require("./model/curriculum");
@@ -28,6 +29,7 @@ const storage = multer.diskStorage({
   },
 });
 
+// Create upload instance
 const upload = multer({ storage: storage });
 
 // Connect Database
@@ -173,6 +175,27 @@ app.get("/curriculum", async (req, res) => {
   }
 });
 
+app.get("/curriculum/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const curriculum = await curriculumModel.findById({_id:id}).populate("reqid");
+    res.json(curriculum);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+app.get('/data/:id',async(req, res) => {
+  try{
+    const data = await curriculumModel.findById(req.params.id);
+    res.json(data)
+}
+catch(error){
+    res.status(500).json({message: error.message})
+}
+});
+
 //Curriculum Fetch API with specific userid and status Approved
 
 app.get("/curriculum/:userId/Approved", async (req, res) => {
@@ -229,17 +252,39 @@ app.get("/curriculums", async (req, res) => {
 
 //Update API for curriculum
 
-// app.put("/curriculum/:id", (req, res) => {
-//   var id = req.params.id;
-//   var data = req.body;
-//   curriculumModel.findOneAndUpdate({ _id: id }, data, (err, data) => {
-//     if (err) {
-//       res.json({ status: "error", error: err });
-//     } else {
-//       res.json({ status: "updated", data: data });
-//     }
-//   });
-// });
+app.put('/update/:id', upload.single('file'), async (req, res) => {
+  const id = req.params.id;
+  const comment = req.body.comment;
+  const Path = req.file ? req.file.path : null;
+  const file = req.file.filename;
+
+  // Update the item with the new file and comment fields
+  try {
+    const item = await curriculumModel.findById(id);
+    if (!item) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    item.comment = comment;
+    if (Path) {
+      // Delete the old file, if it exists
+      if (item.Path) {
+        fs.unlinkSync(item.Path);
+      }
+
+      item.path = Path;
+      item.file = file;
+    }
+
+    const updatedItem = await item.save();
+    res.json(updatedItem);
+    console.log(updatedItem);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
 
 //Update API for curriculum status
 
@@ -295,6 +340,8 @@ app.get("/files/:id", async (req, res) => {
   }
 });
 
+//Admin side search API
+
 app.get("/search", async (req, res) => {
   const query = req.query.q;
 
@@ -302,18 +349,47 @@ app.get("/search", async (req, res) => {
     .find()
     .populate({
       path: "reqid",
-      match:{
+      match: {
         $or: [
-         {title: { $regex: query, $options: "i"  }},
-         {type: { $regex: query, $options: 'i' } },
-         {organisation: { $regex: query, $options: 'i' } },
-         {category: { $regex: query, $options: 'i' } },
+          { title: { $regex: query, $options: "i" } },
+          { type: { $regex: query, $options: "i" } },
+          { organisation: { $regex: query, $options: "i" } },
+          { category: { $regex: query, $options: "i" } },
         ],
-      }
+      },
     })
     .exec();
   const filteredResults = results.filter((result) => result.reqid !== null);
   res.json(filteredResults);
+});
+
+
+//Faculty side search API
+
+app.get("/search/:userId", async (req, res) => {
+  const query = req.query.q;
+  const userId = req.params.userId;
+
+  try {
+    const results = await curriculumModel
+      .find({ userId: userId })
+      .populate({
+        path: "reqid",
+        match: {
+          $or: [
+            { title: { $regex: query, $options: "i" } },
+            { type: { $regex: query, $options: "i" } },
+            { organisation: { $regex: query, $options: "i" } },
+            { category: { $regex: query, $options: "i" } },
+          ],
+        },
+      })
+      .exec();
+    const filteredResults = results.filter((result) => result.reqid !== null);
+    res.json(filteredResults);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 const port = process.env.PORT || 3001;

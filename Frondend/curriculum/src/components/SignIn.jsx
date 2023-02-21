@@ -39,9 +39,9 @@ export default function LoginPage() {
         localStorage.setItem("userId", userId);
 
         if (useremail === "admin@gmail.com") {
-          navigate("/");
+          navigate("/page");
         } else {
-          navigate("/");
+          navigate("/page");
         }
       } else {
         alert("Invalid user");

@@ -96,7 +96,7 @@ const Readcurriclum = () => {
                   )}
                   </TableCell>
                   <TableCell>
-                  <Link to={`/updatecurriclum`}>
+                  <Link to={`/update/${data._id}`}>
                     <Button>update</Button>
                   </Link>
                   <Button onClick={() => onDelete(data._id)}>delete</Button>

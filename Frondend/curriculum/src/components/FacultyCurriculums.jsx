@@ -49,10 +49,8 @@ const MyCard = () => {
     };
     return (
     <>
-      <Navbar />
-      {/* <Searchtab/> */}
-      <div style={{padding:"20px"}}>
-        <div style={{ display: "flex", padding: "10px" }}>
+      {/* <div style={{padding:"20px"}}>
+        <div style={{ display: "flex", padding: "10px" }}> */}
           {CurData.map((data) => (
             <Card sx={{ width:"25%", marginTop: "30px",padding:'30px',backgroundColor:'beige'}}>
               <CardActionArea>
@@ -79,8 +77,8 @@ const MyCard = () => {
               </CardActions>
             </Card>
           ))}
-        </div>
-              </div>
+        {/* </div>
+              </div> */}
     </>
   );
 };

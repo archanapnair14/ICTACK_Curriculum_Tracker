@@ -19,33 +19,43 @@ const AllCurriculums = () => {
 
   return (
     <>
-      <Navbar />
-      <div style={{padding:"20px"}}>
-          {CurData.map((data) => (
-          <div style={{ display: "flex"}}>
-            <Card sx={{ width:"25%", marginTop: "30px",padding:'30px',backgroundColor:'beige',border:'2px solid',display:"flex",justifyContent:'space-evenly',alignContent:'space-between'}}>
-           <CardActionArea>
-             <CardContent>
-                  <Typography gutterBottom variant="body1" fontSize='18px' component='div'>
-                    Requiremnet Name : {data.reqid.title}
-                  </Typography>
-                
-                  <Typography gutterBottom variant="body1" fontSize='18px'>
-                    Type : {data.reqid.type}
-                  </Typography>
-                  <Typography gutterBottom variant="body1" fontSize='18px'>
-                    Category : {data.reqid.category}
-                  </Typography>
-                  <Typography gutterBottom variant="body1" fontSize='18px'>
-                    Comment : {data.comment}
-                  </Typography>
-               </CardContent>
-              </CardActionArea>
-            </Card>
-            </div>
+      {CurData.map((data) => (
+        <Card
+          sx={{
+            width: "25%",
+            marginTop: "30px",
+            padding: "30px",
+            backgroundColor: "beige",
+            border: "2px solid",
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignContent: "space-between",
+          }}
+        >
+          <CardActionArea>
+            <CardContent>
+              <Typography
+                gutterBottom
+                variant="body1"
+                fontSize="18px"
+                component="div"
+              >
+                Requiremnet Name : {data.reqid.title}
+              </Typography>
 
-          ))}
-      </div>
+              <Typography gutterBottom variant="body1" fontSize="18px">
+                Type : {data.reqid.type}
+              </Typography>
+              <Typography gutterBottom variant="body1" fontSize="18px">
+                Category : {data.reqid.category}
+              </Typography>
+              <Typography gutterBottom variant="body1" fontSize="18px">
+                Comment : {data.comment}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      ))}
     </>
   );
 };

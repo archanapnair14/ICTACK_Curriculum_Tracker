@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
+import Sidemenu from "./Dashboard";
 
 
 const Requirements = () => {
@@ -44,6 +45,9 @@ const Requirements = () => {
   };
   return (
     <>
+         <Box sx={{display:"flex",marginTop:'20px'}}>
+      <Sidemenu/>
+
       <Container maxWidth="xs">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box
@@ -158,6 +162,7 @@ const Requirements = () => {
           </Button>
         </form>
       </Container>
+      </Box>
     </>
   );
 };

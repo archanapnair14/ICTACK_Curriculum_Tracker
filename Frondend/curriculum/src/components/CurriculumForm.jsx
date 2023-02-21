@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { FormLabel } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useRef } from "react";
+import Typography from "@mui/material/Typography";
+
+
 
 const Curriculum = () => {
   const [file, setFileData] = useState(null);
@@ -55,7 +58,6 @@ const Curriculum = () => {
 
   return (
     <Container maxWidth="xs">
-      <h1>Add Curriculum</h1>
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <Box
           mb={2}
@@ -66,6 +68,14 @@ const Curriculum = () => {
             alignItems: "center",
           }}
         >
+          <Typography
+            gutterBottom
+            variant="h4"
+            fontFamily="cursive"
+            component="div"
+          >
+            Add Curriculum
+          </Typography>
           <TextField
             sx={{ mt: 3 }}
             variant="outlined"

@@ -11,6 +11,9 @@ import MyCard from "./components/FacultyCurriculums";
 import AllCurriculums from "./components/ApprovedCurriculums";
 import LogoutButton from "./components/LogOut";
 import Searchtab from "./components/Searchtab";
+import Search from "./components/Search";
+import Updatecurriculam from "./components/Updatecurriculam";
+import HomePage from "./components/HomePage";
 
 const App = () => {
   const userid = localStorage.getItem("userId");
@@ -32,6 +35,8 @@ const App = () => {
           element={userid ? <Curriculum /> : <Home />}
         />
         <Route exact path="/view" element={userid ? <View /> : <Home />} />
+        <Route exact path="/page" element={userid ? <HomePage/>: <Home />} />
+
         <Route
           exact
           path="/read"
@@ -45,7 +50,12 @@ const App = () => {
         <Route
           exact
           path="/adminapproved"
-          element={userid ? <AllCurriculums /> : <Home />}
+          element={userid ? <Search/> : <Home />}
+        />
+        <Route
+          exact
+          path="/update/:id"
+          element={userid ? <Updatecurriculam/> : <Home />}
         />
         <Route
           exact

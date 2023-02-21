@@ -1,137 +1,112 @@
-// import {React, useState} from 'react'
-// import '../SearchBar/Style.css';
-// const Searchtab = () => {
-//   const [searchTerm, setSearchTerm] = useState("");
-//   return (
-//     <div className="templateContainer">
-//           <div className="searchInput_Container">
-//             <input id="searchInput" type="text" placeholder="Search here..." onChange={(event) => {
-//               setSearchTerm(event.target.value);
-//             }} />
-//           </div>
-//           <div className="template_Container">
-//             {
-//               data
-//                 .filter((val) => {
-//                   if(searchTerm == ""){
-//                     return val;
-//                   }else if(val.title.toLowerCase().includes(searchTerm.toLowerCase())){
-//                     return val;
-//                   }
-//                 })
-//                 .map((val) => {
-//                   return(
-//                     <div className="template" key={val.id}>
-//                         <img src={val.image} alt="" />
-//                         <h3>{val.title}</h3>
+import React, { useState } from "react";
+import axios from "axios";
+import TextField from "@mui/material/TextField";
+import Container from "@mui/material/Container";
+import { Button, CardActionArea } from "@mui/material";
+import Box from "@mui/material/Box";
+import { useForm } from "react-hook-form";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import AllCurriculums from "./ApprovedCurriculums";
 
-//                     </div>
-//                   )
-//                 })
-//             }
-//           </div>
-//         </div>
-//   )
-// }
+const Search = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-// export default Searchtab
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
 
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { Card, Input } from "semantic-ui-react";
-// import Card from "@mui/material/Card";
-// import CardContent from "@mui/material/CardContent";
-// import Typography from "@mui/material/Typography";
-// import { Button, CardActionArea, CardActions, TextField } from "@mui/material";
+  const onSubmit = async (event) => {
+    const response = await axios.get("http://localhost:3001/search", {
+      params: { q: query },
+    });
+    setResults(response.data);
+    console.log(response.data);
+    reset();
+  };
 
-// export default function Search() {
-//   const id = localStorage.getItem("userId");
-//   const [APIData, setAPIData] = useState([]);
-//   const [filteredResults, setFilteredResults] = useState([]);
-//   const [searchInput, setSearchInput] = useState("");
-//   useEffect(() => {
-//     axios
-//       .get(`http://localhost:3001/curriculum/${id}/Approved`)
-//       .then((response) => {
-//         setAPIData(response.data);
-//       });
-//   }, []);
+  return (
+    <>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              label="Search"
+              name="name"
+              value={query} onChange={(event) => setQuery(event.target.value)}
+              fullWidth
+              autoComplete="name"
+              autoFocus
+              {...register("name", {
+                required: "Type Anything To Search",
+            })}
+              error={!!errors?.name}
+              helperText={errors?.name ? errors.name.message : null}
+            /> */}
+          <TextField
+          sx={{ mt: 3,padding:'20px',width:'50%' }}
+          variant="outlined"
+          placeholder="Search......."
+            type="text"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
 
-//   const searchItems = (searchValue) => {
-//     setSearchInput(searchValue);
-//     if (searchInput !== "") {
-//       const filteredData = APIData.filter((item) => {
-//         return Object.values(item)
-//           .join("")
-//           .toLowerCase()
-//           .includes(searchInput.toLowerCase());
-//       });
-//       setFilteredResults(filteredData);
-//     } else {
-//       setFilteredResults(APIData);
-//     }
-//   };
-//   console.log(filteredResults);
-
-//   return (
-//     <>
-//       <TextField
-//         icon="search"
-//         placeholder="Search..."
-//         onChange={(e) => searchItems(e.target.value)}
-//       />
-//       <div style={{ padding: 20, display: "flex" }}>
-//         {searchInput.length > 1
-//           ? filteredResults.map((item) => {
-//               return (
-//                 <Card sx={{ maxWidth: 345, marginTop: "30px" }}>
-//                   <CardActionArea>
-//                     <CardContent>
-//                       <Typography gutterBottom variant="h5" component="div">
-//                         {item.reqid.title}
-//                       </Typography>
-//                       <Typography variant="body2" color="text.secondary">
-//                         {item.comment}
-//                       </Typography>
-//                       <Typography variant="body2" color="text.secondary">
-//                         {item.status}
-//                       </Typography>
-//                     </CardContent>
-//                   </CardActionArea>
-//                   <CardActions>
-//                     <Button size="small" color="primary">
-//                       Download
-//                     </Button>
-//                   </CardActions>
-//                 </Card>
-//               );
-//             })
-//           : APIData.map((item) => {
-//               return (
-//                 <Card sx={{ maxWidth: 345, marginTop: "30px" }}>
-//                   <CardActionArea>
-//                     <CardContent>
-//                       <Typography gutterBottom variant="h5" component="div">
-//                         {item.reqid.title}
-//                       </Typography>
-//                       <Typography variant="body2" color="text.secondary">
-//                         {item.comment}
-//                       </Typography>
-//                       <Typography variant="body2" color="text.secondary">
-//                         {item.status}
-//                       </Typography>
-//                     </CardContent>
-//                   </CardActionArea>
-//                   <CardActions>
-//                     <Button size="small" color="primary">
-//                       Download
-//                     </Button>
-//                   </CardActions>
-//                 </Card>
-//               );
-//             })}
-//         {/* </Card.Group> */}
-//       </div>
-//     </>
-//   );
-// }
+          <Button
+          sx={{ mt:5,padding:'18px'}}
+          type="submit"
+            variant="contained"
+            color="success"
+          >
+            Search
+          </Button>
+        </form>
+      <div style={{ padding: "20px" }}>
+        <div style={{ display: "flex", padding: "10px" }}>
+          {query.length > 1 ? 
+            results.map((data) => (
+              <Card
+                sx={{
+                  width: "25%",
+                  marginTop: "30px",
+                  padding: "30px",
+                  backgroundColor: "beige",
+                }}
+              >
+                <CardActionArea>
+                  <CardContent>
+                    <Typography
+                      gutterBottom
+                      variant="body1"
+                      fontSize="20px"
+                      component="div"
+                    >
+                      Requirment Name : {data.reqid.title}
+                    </Typography>
+                    <Typography gutterBottom variant="body1" fontSize="18px">
+                      Type : {data.reqid.type}
+                    </Typography>
+                    <Typography gutterBottom variant="body1" fontSize="18px">
+                      Category : {data.reqid.category}
+                    </Typography>
+                    <Typography gutterBottom variant="body1" fontSize="18px">
+                      Comment : {data.comment}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            ))
+           : (
+            <AllCurriculums/>
+          )}
+        </div>
+      </div>
+      </>
+  );
+};
+export default Search;

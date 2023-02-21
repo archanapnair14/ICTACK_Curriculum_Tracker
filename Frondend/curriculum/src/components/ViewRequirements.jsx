@@ -10,36 +10,37 @@ import Navbar from "../Navbar/Navbar";
 import { Button } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
+import Sidemenu from "./Dashboard";
+import Box from "@mui/material/Box";
 
 const View = () => {
   const [APIData, setAPIData] = useState([]);
-  const [curData, setCurData] = useState([]);
-
+  const [curdData, setCurdData] = useState([]);
+  const inputref = useRef();
+  console.log(inputref);
   const userId = localStorage.getItem("userId");
   console.log(userId);
   useEffect(() => {
     axios.get(`http://localhost:3001/requirements`).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setAPIData(response.data);
     });
-    axios.get(`http://localhost:3001/curriculum/`).then((response) => {
-      console.log(response.data);
-      setCurData(response.data);
-    });
-  }, []);
 
-  // const getUserCurriculum = (userId) => {
-  //   return curData.filter((cur) => cur.userId === userId);
-  // };
-  // console.log(getUserCurriculum);
+    axios.get(`http://localhost:3001/curriculum/${inputref}`).then((response) => {
+      console.log(response.data);
+      setCurdData(response.data);
+    });
+
+  }, []);
 
   return (
     <>
-      <Navbar />
+     <Box sx={{display:"flex"}}>
+      <Sidemenu/>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ width:'100%',marginTop:'80px',backgroundColor:'beige' }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell component="th" scope="row">
@@ -66,11 +67,14 @@ const View = () => {
                 <TableCell align="right">{data.organisation}</TableCell>
                 <TableCell align="right">{data.hours}</TableCell>
                 <TableCell align="right">
-
+                  <input
+                    ref={inputref}
+                    value={data._id}
+                    style={{ display: "none" }}
+                  />{" "}
                   <Link to={`/curriculum/${data._id}`}>
                     <Button>Respond</Button>
                   </Link>
-                  
                   {/* {!curData || data.status === "Approved"? ( */}
                   {/* {!curData ? (
 
@@ -93,6 +97,7 @@ const View = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      </Box>
     </>
   );
 };

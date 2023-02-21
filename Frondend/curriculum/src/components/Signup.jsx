@@ -30,7 +30,7 @@ const SignUp = () => {
     axios
       .post(`http://localhost:3001/register/`, { name, email, password })
       .then(() => {
-        navigate("/");
+        navigate("/login");
       });
   };
   return (
