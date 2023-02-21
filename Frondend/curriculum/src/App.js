@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes,Route } from "react-router-dom";
 import Curriculum from "./components/CurriculumForm";
 import Home from "./components/Home";
 import Readcurriclum from "./components/Crudcurriclum";
@@ -15,28 +15,30 @@ import Updatecurriculam from "./components/Updatecurriculam";
 
 import Logout from "./components/LogOut";
 import Page from "./components/Page";
+import EditCurriculam from "./components/EditCurriculum";
+import EditCurriculums from "./components/FaculityEdit";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useState } from "react";
 
 const App = () => {
-  const userid = localStorage.getItem("userId");
+
+  const userid = localStorage.getItem('userId');
+
 
   return (
     <>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<LoginPage />} />
-        <Route
-          exact
-          path="/requirements"
-          element={userid ? <Requirements /> : <Home />}
-        />
+        <Route exact path="/requirements" element={<Requirements />} />
         <Route exact path="/signup" element={<SignUp />} />
-        <Route
+       <Route
           exact
           path="/curriculum/:id"
           element={userid ? <Curriculum /> : <Home />}
         />
         <Route exact path="/view" element={userid ? <View /> : <Home />} />
-        <Route exact path="/page" element={<Page/>} />
+        <Route exact path="/page" element={<Page />} />
 
         <Route
           exact
@@ -46,24 +48,30 @@ const App = () => {
         <Route
           exact
           path="/approved"
-          element={userid ? <Searchtab/> : <Home />}
+          element={userid ? <Searchtab /> : <Home />}
         />
         <Route
           exact
           path="/adminapproved"
-          element={userid ? <Search/> : <Home />}
+          element={userid ? <Search /> : <Home />}
         />
         <Route
           exact
           path="/update/:id"
-          element={userid ? <Updatecurriculam/> : <Home />}
+          element={userid ? <Updatecurriculam /> : <Home />}
         />
         <Route
           exact
-          path="/logout"
-          element={userid ? <Logout/> : <Home />}
+          path="/edits"
+          element={userid ? <EditCurriculums /> : <Home />}
         />
-      </Routes>
+        <Route
+          exact
+          path="/edit/:id"
+          element={userid ? <EditCurriculam /> : <Home />}
+        />
+        <Route exact path="/logout" element={userid ? <Logout /> : <Home />} />
+      </Routes> 
     </>
   );
 };

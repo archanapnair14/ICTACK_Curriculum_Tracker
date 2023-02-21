@@ -4,13 +4,16 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 
+
+
 export default function LoginPage() {
   const navigate = useNavigate();
+
 
   const {
     register,
@@ -38,6 +41,7 @@ export default function LoginPage() {
 
         localStorage.setItem("userToken", token);
         localStorage.setItem("userId", userId);
+
 
         if (useremail === "admin@gmail.com") {
           navigate("/page");

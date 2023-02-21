@@ -185,11 +185,29 @@ app.get("/curriculum/:id", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+app.get("/curriculum/:reqid", async (req, res) => {
+  const reqid = req.params.reqid;
+  try {
+    const curriculum = await curriculumModel.find().populate('reqid');
+    res.json(curriculum);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
 
-app.get('/data/:id/:userId/:reqid',async(req, res) => {
-  const { userId, reqid} = req.params;
-  const data = await curriculumModel.findOne({ userId:userId}).populate('reqid');
-  res.json(data);
+app.get('/data/:userId',async(req, res) => {
+
+  const userId = req.params.userId;
+
+  // Find the user's curriculum document and populate the 'requirements' field
+  curriculumModel.findOne({ userId: userId }).populate('reqid').exec((err, curriculum) => {
+    if (err) throw err;
+
+    // Combine the user and requirement data and send it in the response
+    const userData = { curriculum };
+    res.send(userData);
+  });
 });
 
 //Curriculum Fetch API with specific userid and status Approved
@@ -245,6 +263,58 @@ app.get("/curriculums", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+app.get("/pending/:userId", async (req, res) => {
+  
+  const userId = req.params.userId;
+
+  try {
+    const curriculum = await curriculumModel
+      .find({userId:userId, status: "pending" })
+      .populate("reqid");
+    if (!curriculum) {
+      return res.status(404).json({ message: "No Pending Curriculums" });
+    }
+    return res.json(curriculum);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+app.put('/edit/:id', upload.single('file'), async (req, res) => {
+  const id = req.params.id;
+  const comment = req.body.comment;
+  const Path = req.file ? req.file.path : null;
+  const file = req.file.filename;
+
+  // Update the item with the new file and comment fields
+  try {
+    const item = await curriculumModel.findById(id);
+    if (!item) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    item.comment = comment;
+    if (Path) {
+      // Delete the old file, if it exists
+      if (item.Path) {
+        fs.unlinkSync(item.Path);
+      }
+
+      item.path = Path;
+      item.file = file;
+    }
+
+    const updatedItem = await item.save();
+    res.json(updatedItem);
+    console.log(updatedItem);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
 
 //Update API for curriculum
 

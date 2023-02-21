@@ -54,7 +54,7 @@ const Readcurriclum = () => {
       .catch((err) => {
         console.error(err);
       });
-      navigate('/');
+      navigate('/page');
   };
 
   return (
