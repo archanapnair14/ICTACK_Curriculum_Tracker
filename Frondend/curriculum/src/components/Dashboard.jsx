@@ -1,4 +1,3 @@
-//import * as React from 'react';
 import React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -24,10 +23,6 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PersonIcon from "@mui/icons-material/Person";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import LogoutIcon from "@mui/icons-material/Logout";
-// import Home from './Home'
-// import RequirementForm  from './Reqform';
-// import Faculty from './Faculty';
-// import ApprovedCurriculum from './Approved';
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -115,7 +110,7 @@ export default function Sidemenu() {
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ backgroundColor: "   #12d1b5", color: "black" }}
+        sx={{ backgroundColor: "  #000", color: "#fff",height:'12vh'}}
         open={open}
       >
         <Toolbar>
@@ -126,12 +121,12 @@ export default function Sidemenu() {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && { display: "none" }),
+              ...(open && { display: "none"}),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" fontFamily='cursive'>
+          <Typography variant="h6" noWrap component="div" fontFamily='cursive' color='#fff'>
             CURRICULUM TRACKER
           </Typography>
         </Toolbar>
@@ -147,7 +142,7 @@ export default function Sidemenu() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List sx={{ backgroundColor: "  #12d1b5", height: "100vh"}}>
+        <List sx={{ backgroundColor: "  #0096FF", height: "100vh"}}>
           <ListItem
             disablePadding
             onClick={() => {
@@ -171,7 +166,7 @@ export default function Sidemenu() {
               >
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary="Home" sx={{opacity: open ? 1 : 0  }}
+              <ListItemText primary="Home" sx={{opacity: open ? 1 : 0,color:'#fff'  }}
  />
             </ListItemButton>
           </ListItem>
@@ -201,11 +196,39 @@ export default function Sidemenu() {
               </ListItemIcon>
               <ListItemText
                 primary="Add Requirements"
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{ opacity: open ? 1 : 0,color:'#fff'}}
               />
             </ListItemButton>
           </ListItem>
-
+          <ListItem
+            disablePadding
+            sx={{ display: "block",padding:'10px' }}
+            onClick={() => {
+              navigate("/read");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <LibraryAddCheckIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="View Curriculums"
+                sx={{ opacity: open ? 1 : 0,color:'#fff'}}
+              />
+            </ListItemButton>
+          </ListItem>
           <ListItem
             disablePadding
             onClick={() => {
@@ -231,7 +254,7 @@ export default function Sidemenu() {
               </ListItemIcon>
               <ListItemText
                 primary="View Requirements"
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{ opacity: open ? 1 : 0,color:'#fff' }}
               />
             </ListItemButton>
           </ListItem>
@@ -239,7 +262,7 @@ export default function Sidemenu() {
           <ListItem
             disablePadding
             onClick={() => {
-              navigate("/faculty");
+              navigate("/Approved");
             }}
             sx={{ display: "block",padding:'10px' }}
           >
@@ -259,16 +282,16 @@ export default function Sidemenu() {
               >
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText primary="Faculty" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="Approved Curriculums" sx={{ opacity: open ? 1 : 0,color:'#fff' }} />
             </ListItemButton>
           </ListItem>
 
           <ListItem
             disablePadding
-            sx={{ display: "block",padding:'10px' }}
             onClick={() => {
-              navigate("/approved");
+              navigate("/adminapproved");
             }}
+            sx={{ display: "block",padding:'10px' }}
           >
             <ListItemButton
               sx={{
@@ -284,14 +307,41 @@ export default function Sidemenu() {
                   justifyContent: "center",
                 }}
               >
-                <LibraryAddCheckIcon />
+                <PersonIcon />
               </ListItemIcon>
-              <ListItemText
-                primary="Approved Curriculum"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText primary="Approved Curriculums" sx={{ opacity: open ? 1 : 0,color:'#fff' }} />
             </ListItemButton>
           </ListItem>
+
+
+          
+          <ListItem
+            disablePadding
+            onClick={() => {
+              navigate("/logout");
+            }}
+            sx={{ display: "block",padding:'10px' }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="SignOut" sx={{ opacity: open ? 1 : 0,color:'#fff' }} />
+            </ListItemButton>
+          </ListItem>
+
         </List>
         <Divider />
       </Drawer>

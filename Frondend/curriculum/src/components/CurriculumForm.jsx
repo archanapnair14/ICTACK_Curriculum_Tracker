@@ -9,6 +9,7 @@ import { FormLabel } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useRef } from "react";
 import Typography from "@mui/material/Typography";
+import Sidemenu from "./Dashboard";
 
 
 
@@ -57,6 +58,9 @@ const Curriculum = () => {
   };
 
   return (
+    <Box sx={{display:"flex",backgroundColor:'lightblue',height:900,mt:6}}>
+    <Sidemenu/>
+
     <Container maxWidth="xs">
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <Box
@@ -117,6 +121,7 @@ const Curriculum = () => {
         </Button>
       </form>
     </Container>
+    </Box>
   );
 };
 

@@ -7,11 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Navbar from "../Navbar/Navbar";
-import { Button } from "@mui/material";
+import { Button,Box } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Sidemenu from "./Dashboard";
 
 const Readcurriclum = () => {
   const navigate = useNavigate();
@@ -53,24 +54,28 @@ const Readcurriclum = () => {
       .catch((err) => {
         console.error(err);
       });
-      navigate('/read');
+      navigate('/');
   };
 
   return (
     <>
-      <Navbar />
-
+    <Box sx={{display:"flex",backgroundColor:'lightblue',height:900,mt:6}}>
+     <Sidemenu/>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ width:'100%',marginTop:'80px',backgroundColor:'gray' }}aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell component="th" scope="row">
-                <TableCell>Name Of Requirement</TableCell>
-                <TableCell >Area Of Training</TableCell>
+              <TableCell component="th" scope="row" align="right">
+                <TableCell>Name</TableCell>
+                <TableCell >Area</TableCell>
               <TableCell >category</TableCell>
               <TableCell >Comments</TableCell>
               <TableCell >No Of Hours</TableCell>
+              
               </TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -79,7 +84,7 @@ const Readcurriclum = () => {
                 key={data._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" align="right"padding="30px">
                   <TableCell align="right">{data.reqid.title}</TableCell>
                   <TableCell align="right">{data.reqid.type}</TableCell>
                   <TableCell align="right" >{data.reqid.category}</TableCell>
@@ -89,17 +94,13 @@ const Readcurriclum = () => {
                 </TableCell>
 
                 <TableCell sx={{ marginRight:"40px"}}>
-                  {data.status !== "Approved" && (
-                    <Button onClick={() => handleApprove(data._id)}>
+                    <Button sx={{color:'#fff'}} onClick={() => handleApprove(data._id)}disabled={data.status === "Approved"}>
                       Approve
                     </Button>
-                  )}
-                  </TableCell>
-                  <TableCell>
                   <Link to={`/update/${data._id}`}>
-                    <Button>update</Button>
+                    <Button sx={{color:'#fff'}}>update</Button>
                   </Link>
-                  <Button onClick={() => onDelete(data._id)}>delete</Button>
+                  <Button sx={{color:'#fff'}} onClick={() => onDelete(data._id)}>delete</Button>
                 </TableCell>
 
               </TableRow>
@@ -107,6 +108,7 @@ const Readcurriclum = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      </Box>
     </>
   );
 };

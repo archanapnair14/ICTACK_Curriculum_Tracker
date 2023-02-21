@@ -35,6 +35,8 @@ const SignUp = () => {
   };
   return (
     <>
+        <Box sx={{display:"flex",backgroundColor:'lightblue',height:900}}>
+
       <Container maxWidth="xs">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box
@@ -122,6 +124,7 @@ const SignUp = () => {
           </Button>
         </form>
       </Container>
+      </Box>
     </>
   );
 };

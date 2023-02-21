@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -50,6 +51,8 @@ export default function LoginPage() {
   };
 
   return (
+    <Box sx={{display:"flex",backgroundColor:'lightblue',height:900}}>
+
     <Container maxWidth="xs">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box
@@ -66,13 +69,14 @@ export default function LoginPage() {
             variant="h4"
             fontFamily="cursive"
             component="div"
+            
           >
             Login
           </Typography>
           <TextField
             sx={{ mt: 1 }}
             variant="outlined"
-            label="email"
+            label="Email"
             fullWidth
             autoComplete="email"
             autoFocus
@@ -89,7 +93,7 @@ export default function LoginPage() {
           <TextField
             sx={{ mt: 5 }}
             variant="outlined"
-            label="password"
+            label="Password"
             type="password"
             fullWidth
             autoComplete="email"
@@ -115,7 +119,9 @@ export default function LoginPage() {
         >
           LogIn
         </Button>
+        <Link to="/signup">New User?</Link>
       </form>
     </Container>
+    </Box>
   );
 }

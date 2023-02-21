@@ -45,7 +45,7 @@ const Requirements = () => {
   };
   return (
     <>
-         <Box sx={{display:"flex",marginTop:'20px'}}>
+<Box sx={{display:"flex",backgroundColor:'beige',height:900,mt:3}}>
       <Sidemenu/>
 
       <Container maxWidth="xs">
@@ -61,7 +61,7 @@ const Requirements = () => {
           >
             <Typography
               gutterBottom
-              variant="h4"
+              variant="h5"
               fontFamily="cursive"
               component="div"
             >
@@ -152,7 +152,7 @@ const Requirements = () => {
           </Box>
 
           <Button
-            sx={{ mt: 3 }}
+            sx={{ mt:1}}
             type="submit"
             variant="contained"
             color="success"

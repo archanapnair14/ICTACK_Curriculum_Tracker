@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
+import Sidemenu from "./Dashboard";
 
 const Updatecurriculam = () => {
 
@@ -59,6 +60,9 @@ const Updatecurriculam = () => {
   };
 
   return (
+    <Box sx={{display:"flex",backgroundColor:'lightblue',height:900,mt:6}}>
+    <Sidemenu/>
+
     <Container maxWidth="xs">
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <Box
@@ -120,6 +124,7 @@ const Updatecurriculam = () => {
         </Button>
       </form>
     </Container>
+    </Box>
   );
 };
 

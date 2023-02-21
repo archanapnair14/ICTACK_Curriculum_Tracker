@@ -186,14 +186,10 @@ app.get("/curriculum/:id", async (req, res) => {
   }
 });
 
-app.get('/data/:id',async(req, res) => {
-  try{
-    const data = await curriculumModel.findById(req.params.id);
-    res.json(data)
-}
-catch(error){
-    res.status(500).json({message: error.message})
-}
+app.get('/data/:id/:userId/:reqid',async(req, res) => {
+  const { userId, reqid} = req.params;
+  const data = await curriculumModel.findOne({ userId:userId}).populate('reqid');
+  res.json(data);
 });
 
 //Curriculum Fetch API with specific userid and status Approved

@@ -37,28 +37,3 @@
   }
 }
 
-.navbar{
-  margin-top:10vh;
-  margin-left:30vh;
-  margin-right:30vh;
-  padding-left:8vh;
-  
-  background-color: #858282;
-  
-  }
-  
-  body{
-    margin:0;
-    padding:0;
-    background-color: rgb(51, 42, 62);
-  background-image:url(./images/background_1_zM58lsj.wide.jpeg);
-  height:100vh;
-  background-size: 'cover';
-  font-size: larger;
-  background-repeat: no-repeat;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
-  }
-  .navbar .nav-item{
-  color:aqua;
-  }
-  

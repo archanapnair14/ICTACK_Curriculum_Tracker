@@ -9,11 +9,12 @@ import SignUp from "./components/Signup";
 import View from "./components/ViewRequirements";
 import MyCard from "./components/FacultyCurriculums";
 import AllCurriculums from "./components/ApprovedCurriculums";
-import LogoutButton from "./components/LogOut";
 import Searchtab from "./components/Searchtab";
 import Search from "./components/Search";
 import Updatecurriculam from "./components/Updatecurriculam";
-import HomePage from "./components/HomePage";
+
+import Logout from "./components/LogOut";
+import Page from "./components/Page";
 
 const App = () => {
   const userid = localStorage.getItem("userId");
@@ -35,7 +36,7 @@ const App = () => {
           element={userid ? <Curriculum /> : <Home />}
         />
         <Route exact path="/view" element={userid ? <View /> : <Home />} />
-        <Route exact path="/page" element={userid ? <HomePage/>: <Home />} />
+        <Route exact path="/page" element={<Page/>} />
 
         <Route
           exact
@@ -60,7 +61,7 @@ const App = () => {
         <Route
           exact
           path="/logout"
-          element={userid ? <LogoutButton /> : <Home />}
+          element={userid ? <Logout/> : <Home />}
         />
       </Routes>
     </>

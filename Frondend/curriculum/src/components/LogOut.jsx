@@ -1,18 +1,15 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,redirect  } from "react-router-dom";
 
-function LogoutButton() {
+const Logout=()=> {
+const navigate = useNavigate();
+const userid = localStorage.getItem('userId');
+const token = localStorage.getItem('userToken');
 
-    const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("userId");
-    navigate('/');
-
-  };
-
-  return <button onClick={handleLogout}>Logout</button>;
+if(userid && token)
+   localStorage.clear();
+   window.location.reload()
+   navigate('/');
 }
 
-export default LogoutButton;
+export default Logout;

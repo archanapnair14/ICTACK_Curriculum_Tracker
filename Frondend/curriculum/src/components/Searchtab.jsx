@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import MyCard from "./FacultyCurriculums";
+import Sidemenu from "./Dashboard";
 
 const Searchtab = () => {
   const userid = localStorage.getItem('userId');
@@ -53,24 +54,13 @@ const Searchtab = () => {
 
   return (
     <>
+        <Box sx={{backgroundColor:'lightblue',height:900,mt:1}}>
+          <Sidemenu/>
+
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              label="Search"
-              name="name"
-              value={query} onChange={(event) => setQuery(event.target.value)}
-              fullWidth
-              autoComplete="name"
-              autoFocus
-              {...register("name", {
-                required: "Type Anything To Search",
-            })}
-              error={!!errors?.name}
-              helperText={errors?.name ? errors.name.message : null}
-            /> */}
+        
         <TextField
-          sx={{ mt: 3,padding:'20px',width:'50%' }}
+          sx={{ padding:'20px',width:'50%',ml:6 }}
           variant="outlined"
           placeholder="Search......."
           type="text"
@@ -79,7 +69,7 @@ const Searchtab = () => {
         />
 
         <Button
-          sx={{ mt:5,padding:'18px'}}
+          sx={{ mt:2,ml:6,padding:'15px',width:'10%'}}
           type="submit"
           variant="contained"
           color="primary"
@@ -87,8 +77,8 @@ const Searchtab = () => {
           Search
         </Button>
       </form>
-      <div style={{ padding: "20px" }}>
-        <div style={{ display: "flex", padding: "10px" }}>
+      <div style={{ padding: "20px",ml:4 }}>
+        <div style={{ display: "flex", padding: "10px",}}> 
           {query.length > 1 ? (
             results.map((data) => (
               <Card
@@ -97,6 +87,7 @@ const Searchtab = () => {
                   marginTop: "30px",
                   padding: "30px",
                   backgroundColor: "beige",
+                  marginLeft:'30px'
                 }}
               >
                 <CardActionArea>
@@ -135,8 +126,9 @@ const Searchtab = () => {
           ) : (
             <MyCard />
           )}
-        </div>
-      </div>
+         </div>
+      </div> 
+      </Box>
     </>
   );
 };

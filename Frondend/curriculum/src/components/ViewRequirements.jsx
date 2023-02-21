@@ -18,6 +18,7 @@ import Box from "@mui/material/Box";
 const View = () => {
   const [APIData, setAPIData] = useState([]);
   const [curdData, setCurdData] = useState([]);
+  
   const inputref = useRef();
   console.log(inputref);
   const userId = localStorage.getItem("userId");
@@ -28,7 +29,7 @@ const View = () => {
       setAPIData(response.data);
     });
 
-    axios.get(`http://localhost:3001/curriculum/${inputref}`).then((response) => {
+    axios.get(`http://localhost:3001/data/${userId}/${inputref}`).then((response) => {
       console.log(response.data);
       setCurdData(response.data);
     });
@@ -37,11 +38,21 @@ const View = () => {
 
   return (
     <>
-     <Box sx={{display:"flex"}}>
+    <Box sx={{display:"flex",backgroundColor:'beige',height:600 ,mt:5}}>
       <Sidemenu/>
       <TableContainer component={Paper}>
+      
         <Table sx={{ width:'100%',marginTop:'80px',backgroundColor:'beige' }} aria-label="simple table">
           <TableHead>
+            <Typography
+            gutterBottom
+            variant="h4"
+            fontFamily="cursive"
+            component="div"
+            color="#000"
+          >
+            Requirements
+          </Typography>
             <TableRow>
               <TableCell component="th" scope="row">
                 Name Of Requirement
@@ -71,26 +82,29 @@ const View = () => {
                     ref={inputref}
                     value={data._id}
                     style={{ display: "none" }}
-                  />{" "}
-                  <Link to={`/curriculum/${data._id}`}>
-                    <Button>Respond</Button>
+                  />
+                  {/* <Link to={`/curriculum/${data._id}`}>
+                    <Button disabled={curdData.status ==="Approved"}>Respond</Button>
                   </Link>
-                  {/* {!curData || data.status === "Approved"? ( */}
-                  {/* {!curData ? (
 
-                    <Link to={`/curriculum/${data._id}`}>
+                  <Link to={`/curriculum/${data._id}`}>
+                    <Button disabled={curdData.status ==="Pending"}>Edit</Button>
+                  </Link> */}
+                  {!curdData ? ( 
+                   <Link to={`/curriculum/${data._id}`}>
                       <Button>Respond</Button>
                     </Link>
-                  ) : (
-                    <Typography variant="body2" color="text.secondary">
-                      Already Responded
-                    </Typography>
-                  )}
-                  {curData && data.status === "pending" && (
-                    <Link to={`/curriculum/${data._id}`}>
+                  ):
+                  <li>Responded</li>
+                  }
+
+                 {curdData.status ==="Pending" && ( 
+                   <Link to={`/curriculum/${data._id}`}>
                       <Button>Edit</Button>
                     </Link>
-                  )} */}
+                  )}
+                  
+                  
                 </TableCell>
               </TableRow>
             ))}

@@ -9,6 +9,8 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import AllCurriculums from "./ApprovedCurriculums";
+import Sidemenu from "./Dashboard";
+
 
 const Search = () => {
   const {
@@ -32,24 +34,13 @@ const Search = () => {
 
   return (
     <>
+            <Box sx={{backgroundColor:'lightblue',height:900,mt:1}}>
+          <Sidemenu/>
+
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* <TextField
-              sx={{ mt: 3 }}
-              variant="outlined"
-              label="Search"
-              name="name"
-              value={query} onChange={(event) => setQuery(event.target.value)}
-              fullWidth
-              autoComplete="name"
-              autoFocus
-              {...register("name", {
-                required: "Type Anything To Search",
-            })}
-              error={!!errors?.name}
-              helperText={errors?.name ? errors.name.message : null}
-            /> */}
+          
           <TextField
-          sx={{ mt: 3,padding:'20px',width:'50%' }}
+          sx={{ mt: 3,padding:'20px',width:'50%',ml:6 }}
           variant="outlined"
           placeholder="Search......."
             type="text"
@@ -58,7 +49,7 @@ const Search = () => {
           />
 
           <Button
-          sx={{ mt:5,padding:'18px'}}
+          sx={{ mt:6,padding:'15px'}}
           type="submit"
             variant="contained"
             color="success"
@@ -106,6 +97,7 @@ const Search = () => {
           )}
         </div>
       </div>
+      </Box>
       </>
   );
 };
