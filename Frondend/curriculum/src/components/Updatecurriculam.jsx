@@ -10,15 +10,13 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
-import Sidemenus from './AdminDash'
+import Sidemenus from "./AdminDash";
 
 const Updatecurriculam = () => {
-
   const navigate = useNavigate();
-  const [datas,setData]= useState('');
+  const [datas, setData] = useState("");
   const [file, setFileData] = useState(null);
-  const [message, setMessage] = useState('');
-
+  const [message, setMessage] = useState("");
 
   const { id } = useParams();
   const {
@@ -39,91 +37,97 @@ const Updatecurriculam = () => {
     const fileData = e.target.files[0];
     console.log(fileData);
     setFileData(fileData);
-  };  
-  
-  const onSubmit = async(data) => {
+  };
+
+  const onSubmit = async (data) => {
     console.log(data);
     const formData = new FormData();
-    formData.append('comment',data.cmnt);
-    formData.append('file',file);
+    formData.append("comment", data.cmnt);
+    formData.append("file", file);
 
     try {
-      const response = await axios.put(`http://localhost:3001/update/${id}`, formData);
+      const response = await axios.put(
+        `http://localhost:3001/update/${id}`,
+        formData
+      );
       console.log(response.data.message);
       reset();
-      navigate('/read');
-    
+      navigate("/read");
     } catch (error) {
       console.error(error);
-      setMessage    ('Error updating image');
+      setMessage("Error updating image");
     }
   };
 
   return (
-    <Box sx={{display:"flex",backgroundColor:'lightblue',height:900,mt:6}}>
-    <Sidemenus/>
+    <Box
+      sx={{ display: "flex", backgroundColor: "lightblue", height: 900, mt: 6 }}
+    >
+      <Sidemenus />
 
-    <Container maxWidth="xs">
-      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-        <Box
-          mb={2}
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            gutterBottom
-            variant="h4"
-            fontFamily="cursive"
-            component="div"
+      <Container maxWidth="xs">
+        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+          <Box
+            mb={2}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            Edit Curriculum
-          </Typography>
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            label="Comment"
-            name="cmnt"
-            value={datas.comment}
-            fullWidth
-            autoComplete="cmnt"
-            autoFocus
-            {...register("cmnt", {
-              required: "Required field",
-            })}
-            error={!!errors?.cmnt}
-            helperText={errors?.cmnt ? errors.cmnt.message : null}
-          />
-          <TextField
-            sx={{ mt: 5 }}
-            variant="outlined"
-            type="file"
-            defaultValue={datas.filename}
-            fullWidth
-            {...register("files", {
-              required: "Required field",
-            })}
-            error={!!errors?.files}
-            helperText={errors?.files && errors.files.message}
-            inputProps={{ aaccept:"application/pdf" }}
-            onChange={handleFileChange}
-          />
-        </Box>
+            <Typography
+              gutterBottom
+              variant="h4"
+              fontFamily="cursive"
+              component="div"
+            >
+              Edit Curriculum
+            </Typography>
 
-        <Button
-          sx={{ mt: 3 }}
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-        >
-          Submit
-        </Button>
-      </form>
-    </Container>
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              label="comment"
+              name="cmnt"
+              fullWidth
+              autoComplete="name"
+              autoFocus
+              {...register("cmnt", {
+                required: "Required field",
+              })}
+              error={!!errors?.cmnt}
+              helperText={errors?.cmnt ? errors.cmnt.message : null}
+            />
+            
+
+            <TextField
+              sx={{ mt: 5 }}
+              variant="outlined"
+              type="file"
+              defaultValue={datas.filename}
+              fullWidth
+              {...register("files", {
+                required: "Required field",
+              })}
+              error={!!errors?.files}
+              helperText={errors?.files && errors.files.message}
+              inputProps={{ aaccept: "application/pdf" }}
+              onChange={handleFileChange}
+            />
+          </Box>
+
+          <Button
+            sx={{ mt: 3 }}
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
+            Submit
+          </Button>
+        </form>
+      </Container>
     </Box>
   );
 };
