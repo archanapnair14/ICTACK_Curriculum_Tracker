@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
-import Sidemenu from "./Dashboard";
+import Sidemenus from './AdminDash'
 
 
 const Requirements = () => {
@@ -39,14 +39,14 @@ const Requirements = () => {
         hours,
       })
       .then(() => {
-        navigate("/");
+        navigate("/page");
         alert("Success");
       });
   };
   return (
     <>
 <Box sx={{display:"flex",backgroundColor:'beige',height:900,mt:3}}>
-      <Sidemenu/>
+      <Sidemenus/>
 
       <Container maxWidth="xs">
         <form onSubmit={handleSubmit(onSubmit)}>

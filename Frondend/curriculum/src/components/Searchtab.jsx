@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
-import { Button, CardActionArea,CardActions } from "@mui/material";
+import { Button, CardActionArea, CardActions } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import MyCard from "./FacultyCurriculums";
-import Sidemenu from "./Dashboard";
+import Sidemenu from "./FacultyDash";
 
 const Searchtab = () => {
-  const userid = localStorage.getItem('userId');
+  const userid = localStorage.getItem("userId");
   const {
     register,
     handleSubmit,
@@ -23,7 +23,6 @@ const Searchtab = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-
 
   const onSubmit = async (event) => {
     const response = await axios.get(`http://localhost:3001/search/${userid}`, {
@@ -54,80 +53,78 @@ const Searchtab = () => {
 
   return (
     <>
-        <Box sx={{backgroundColor:'lightblue',height:900,mt:1}}>
-          <Sidemenu/>
+      <Box sx={{ backgroundColor: "lightblue", height: 900, mt: 1 }}>
+        <Sidemenu />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        
-        <TextField
-          sx={{ padding:'20px',width:'50%',ml:6 }}
-          variant="outlined"
-          placeholder="Search......."
-          type="text"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            sx={{ padding: "20px", width: "50%", ml: 6 }}
+            variant="outlined"
+            placeholder="Search......."
+            type="text"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
 
-        <Button
-          sx={{ mt:2,ml:6,padding:'15px',width:'10%'}}
-          type="submit"
-          variant="contained"
-          color="primary"
-        >
-          Search
-        </Button>
-      </form>
-      <div style={{ padding: "20px",ml:4 }}>
-        <div style={{ display: "flex", padding: "10px",}}> 
-          {query.length > 1 ? (
-            results.map((data) => (
-              <Card
-                sx={{
-                  width: "25%",
-                  marginTop: "30px",
-                  padding: "30px",
-                  backgroundColor: "beige",
-                  marginLeft:'30px'
-                }}
-              >
-                <CardActionArea>
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="body1"
-                      fontSize="20px"
-                      component="div"
+          <Button
+            sx={{ mt: 2, ml: 6, padding: "15px", width: "10%" }}
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            Search
+          </Button>
+        </form>
+        <div style={{ padding: "20px", ml: 4, marginLeft: 10 }}>
+          <div style={{ display: "flex", padding: "10px" }}>
+            {query.length > 1 ? (
+              results.map((data) => (
+                <Card
+                  sx={{
+                    width: "25%",
+                    marginTop: "30px",
+                    padding: "30px",
+                    backgroundColor: "beige",
+                  }}
+                >
+                  <CardActionArea>
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="body1"
+                        fontSize="20px"
+                        component="div"
+                      >
+                        Requirment Name : {data.reqid.title}
+                      </Typography>
+                      <Typography gutterBottom variant="body1" fontSize="18px">
+                        Type : {data.reqid.type}
+                      </Typography>
+                      <Typography gutterBottom variant="body1" fontSize="18px">
+                        Category : {data.reqid.category}
+                      </Typography>
+                      <Typography gutterBottom variant="body1" fontSize="18px">
+                        Comment : {data.comment}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions component="div">
+                    <Button
+                      onClick={() => handleDownload(data._id)}
+                      size="small"
+                      color="primary"
+                      disabled={loading}
                     >
-                      Requirment Name : {data.reqid.title}
-                    </Typography>
-                    <Typography gutterBottom variant="body1" fontSize="18px">
-                      Type : {data.reqid.type}
-                    </Typography>
-                    <Typography gutterBottom variant="body1" fontSize="18px">
-                      Category : {data.reqid.category}
-                    </Typography>
-                    <Typography gutterBottom variant="body1" fontSize="18px">
-                      Comment : {data.comment}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions component="div">
-                  <Button
-                    onClick={() => handleDownload(data._id)}
-                    size="small"
-                    color="primary"
-                    disabled={loading}
-                  >
-                    {loading ? "Downloading..." : "Download File"}
-                  </Button>
-                </CardActions>
-              </Card>
-            ))
-          ) : (
-            <MyCard />
-          )}
-         </div>
-      </div> 
+                      {loading ? "Downloading..." : "Download File"}
+                    </Button>
+                  </CardActions>
+                </Card>
+              ))
+            ) : (
+              <MyCard />
+            )}
+          </div>
+        </div>
       </Box>
     </>
   );

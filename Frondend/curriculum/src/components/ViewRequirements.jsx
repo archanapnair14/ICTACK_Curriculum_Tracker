@@ -12,28 +12,26 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import Sidemenu from "./Dashboard";
+import Sidemenu from "./FacultyDash";
 import Box from "@mui/material/Box";
 
 const View = () => {
   const [APIData, setAPIData] = useState([]);
-  const [response, setData] = useState([]);
-
+  const [curriculum, setCurriculum] = useState([]);
+  
   const inputref = useRef();
   console.log(inputref);
   const userId = localStorage.getItem("userId");
   console.log(userId);
   useEffect(() => {
     axios.get(`http://localhost:3001/requirements`).then((response) => {
-      // console.log(response.data);
+      console.log(response.data);
       setAPIData(response.data);
     });
-    axios
-      .get(`http://localhost:3001/curriculum/${userId}/Approved`)
-      .then((response) => {
-        console.log(response.data);
-        setData(response.data);
-      });
+    axios.get(`http://localhost:3001/data`).then((response) => {
+      setCurriculum(response.data);
+      console.log(response.data);
+    });
   }, []);
 
   return (
@@ -69,7 +67,7 @@ const View = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {APIData.map((data, index) => (
+              {APIData.map((data) => (
                 <TableRow
                   key={data._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -82,15 +80,9 @@ const View = () => {
                   <TableCell align="right">{data.organisation}</TableCell>
                   <TableCell align="right">{data.hours}</TableCell>
                   <TableCell align="right">
-                    <input
-                      ref={inputref}
-                      value={data._id}
-                      style={{ display: "none" }}
-                    />
+                    <Link to={`/curriculum/${data._id}`}>Respond</Link>
 
-                    <Link to={`/curriculum/${data._id}`}>
-                      <Button>Respond</Button>
-                    </Link>
+                   
                   </TableCell>
                 </TableRow>
               ))}

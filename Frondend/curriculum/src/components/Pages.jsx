@@ -1,15 +1,15 @@
 import React from 'react'
 import { Box } from '@mui/system'
-import Sidemenus from './AdminDash'
+import Sidemenu from './FacultyDash'
 
-const Page = () => {
+const Pages = () => {
   return (
 <>
 <Box sx={{display:"flex",backgroundColor:'beige',height:900}}>
 
-<Sidemenus/>
+<Sidemenu/>
 </Box>
 </>  )
 }
 
-export default Page
+export default Pages

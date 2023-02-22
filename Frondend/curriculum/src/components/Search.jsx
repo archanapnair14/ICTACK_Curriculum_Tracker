@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import AllCurriculums from "./ApprovedCurriculums";
-import Sidemenu from "./Dashboard";
+import Sidemenus from './AdminDash'
 
 
 const Search = () => {
@@ -35,7 +35,7 @@ const Search = () => {
   return (
     <>
             <Box sx={{backgroundColor:'lightblue',height:900,mt:1}}>
-          <Sidemenu/>
+          <Sidemenus/>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           

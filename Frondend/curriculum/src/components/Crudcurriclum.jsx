@@ -12,7 +12,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Sidemenu from "./Dashboard";
+import Sidemenus from './AdminDash'
 
 const Readcurriclum = () => {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const Readcurriclum = () => {
   return (
     <>
     <Box sx={{display:"flex",backgroundColor:'lightblue',height:900,mt:6}}>
-     <Sidemenu/>
+     <Sidemenus/>
       <TableContainer component={Paper}>
         <Table sx={{ width:'100%',marginTop:'80px',backgroundColor:'gray' }}aria-label="simple table">
           <TableHead>

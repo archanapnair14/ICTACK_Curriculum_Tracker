@@ -9,9 +9,7 @@ import { FormLabel } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useRef } from "react";
 import Typography from "@mui/material/Typography";
-import Sidemenu from "./Dashboard";
-
-
+import Sidemenu from './FacultyDash'
 
 const Curriculum = () => {
   const [file, setFileData] = useState(null);
@@ -43,7 +41,7 @@ const Curriculum = () => {
     formData.append("reqid", id);
     formData.append("userId", userId);
     formData.append("file", file);
-    formData.append("status",'');
+    formData.append("status", "");
 
     fetch("http://localhost:3001/curriculum", {
       method: "POST",
@@ -53,74 +51,77 @@ const Curriculum = () => {
       .then((data) => {
         console.log(data);
       });
-      reset();
-      navigate('/view')
+
+    reset();
+    navigate("/view");
   };
 
   return (
-    <Box sx={{display:"flex",backgroundColor:'lightblue',height:900,mt:6}}>
-    <Sidemenu/>
+    <Box
+      sx={{ display: "flex", backgroundColor: "lightblue", height: 900, mt: 6 }}
+    >
+      <Sidemenu />
 
-    <Container maxWidth="xs">
-      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-        <Box
-          mb={2}
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            gutterBottom
-            variant="h4"
-            fontFamily="cursive"
-            component="div"
+      <Container maxWidth="xs">
+        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+          <Box
+            mb={2}
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            Add Curriculum
-          </Typography>
-          <TextField
-            sx={{ mt: 3 }}
-            variant="outlined"
-            label="Comment"
-            name="cmnt"
-            fullWidth
-            autoComplete="cmnt"
-            autoFocus
-            {...register("cmnt", {
-              required: "Required field",
-            })}
-            error={!!errors?.cmnt}
-            helperText={errors?.cmnt ? errors.cmnt.message : null}
-          />
-          <TextField
-            sx={{ mt: 5 }}
-            variant="outlined"
-            type="file"
-            fullWidth
-            {...register("files", {
-              required: "Required field",
-            })}
-            error={!!errors?.files}
-            helperText={errors?.files && errors.files.message}
-            accept="application/pdf"
-            onChange={handleFileChange}
-          />
-          {/* {fileData && <p>File Data: {fileData}</p>} */}
-        </Box>
+            <Typography
+              gutterBottom
+              variant="h4"
+              fontFamily="cursive"
+              component="div"
+            >
+              Add Curriculum
+            </Typography>
+            <TextField
+              sx={{ mt: 3 }}
+              variant="outlined"
+              label="Comment"
+              name="cmnt"
+              fullWidth
+              autoComplete="cmnt"
+              autoFocus
+              {...register("cmnt", {
+                required: "Required field",
+              })}
+              error={!!errors?.cmnt}
+              helperText={errors?.cmnt ? errors.cmnt.message : null}
+            />
+            <TextField
+              sx={{ mt: 5 }}
+              variant="outlined"
+              type="file"
+              fullWidth
+              {...register("files", {
+                required: "Required field",
+              })}
+              error={!!errors?.files}
+              helperText={errors?.files && errors.files.message}
+              accept="application/pdf"
+              onChange={handleFileChange}
+            />
+            {/* {fileData && <p>File Data: {fileData}</p>} */}
+          </Box>
 
-        <Button
-          sx={{ mt: 3 }}
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-        >
-          Submit
-        </Button>
-      </form>
-    </Container>
+          <Button
+            sx={{ mt: 3 }}
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
+            Submit
+          </Button>
+        </form>
+      </Container>
     </Box>
   );
 };

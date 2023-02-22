@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
-import Sidemenu from "./Dashboard";
+import Sidemenus from './AdminDash'
 
 const Updatecurriculam = () => {
 
@@ -61,7 +61,7 @@ const Updatecurriculam = () => {
 
   return (
     <Box sx={{display:"flex",backgroundColor:'lightblue',height:900,mt:6}}>
-    <Sidemenu/>
+    <Sidemenus/>
 
     <Container maxWidth="xs">
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">

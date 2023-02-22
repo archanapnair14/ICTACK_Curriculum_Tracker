@@ -7,10 +7,12 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import { Link } from "react-router-dom";
+import Sidemenu from "./FacultyDash";
+import Box from "@mui/material/Box";
 
 const EditCurriculums = () => {
   const [CurData, setData] = useState([]);
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     axios.get(`http://localhost:3001/pending/${userId}`).then((response) => {
@@ -21,56 +23,62 @@ const EditCurriculums = () => {
 
   return (
     <>
-      {CurData.map((data) => (
-        <Card
-          sx={{
-            width: "25%",
-            marginTop: "30px",
-            padding: "30px",
-            backgroundColor: "grey",
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignContent: "space-between",
-            color:'#fff'
-          }}
-        >
-          <CardActionArea>
-            <CardContent>
-              <Typography
-                gutterBottom
-                variant="body1"
-                fontSize="18px"
-                component="div"
-              >
-                Requiremnet Name : {data.reqid.title}
-              </Typography>
+      <Box
+        sx={{
+          backgroundColor: "lightblue",
+          height: 900,
+          mt: 1,
+          // display: "flex",
+        }}
+      >
+        <Sidemenu />
+        {CurData.map((data) => (
+          <Card
+            sx={{
+              width: "25%",
+              marginTop: "30px",
+              marginLeft:10,
 
-              <Typography gutterBottom variant="body1" fontSize="18px">
-                Type : {data.reqid.type}
-              </Typography>
-              <Typography gutterBottom variant="body1" fontSize="18px">
-                Category : {data.reqid.category}
-              </Typography>
-              <Typography gutterBottom variant="body1" fontSize="18px">
-                Comment : {data.comment}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions component="div">
-          <Link to={`/edit/${data._id}`}>
+              padding: "30px",
+              backgroundColor: "grey",
+              // display: "flex",
+              // justifyContent: "space-evenly",
+              // alignContent: "space-between",
+              color: "#fff",
+            }}
+          >
+            <CardActionArea>
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  variant="body1"
+                  fontSize="18px"
+                  component="div"
+                >
+                  Requiremnet Name : {data.reqid.title}
+                </Typography>
 
-            <Button
-              onClick={''}
-              size="small"
-              variant="contained"
-              
-              >
-            Edit
-            </Button>
-            </Link>
-          </CardActions>
-        </Card>
-      ))}
+                <Typography gutterBottom variant="body1" fontSize="18px">
+                  Type : {data.reqid.type}
+                </Typography>
+                <Typography gutterBottom variant="body1" fontSize="18px">
+                  Category : {data.reqid.category}
+                </Typography>
+                <Typography gutterBottom variant="body1" fontSize="18px">
+                  Comment : {data.comment}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions component="div">
+              <Link to={`/edit/${data._id}`}>
+                <Button onClick={""} size="small" variant="contained">
+                  Edit
+                </Button>
+              </Link>
+            </CardActions>
+          </Card>
+        ))}
+      </Box>
     </>
   );
 };

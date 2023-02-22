@@ -19,6 +19,7 @@ import EditCurriculam from "./components/EditCurriculum";
 import EditCurriculums from "./components/FaculityEdit";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useState } from "react";
+import Pages from "./components/Pages";
 
 const App = () => {
 
@@ -30,7 +31,6 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<LoginPage />} />
-        <Route exact path="/requirements" element={<Requirements />} />
         <Route exact path="/signup" element={<SignUp />} />
        <Route
           exact
@@ -38,7 +38,11 @@ const App = () => {
           element={userid ? <Curriculum /> : <Home />}
         />
         <Route exact path="/view" element={userid ? <View /> : <Home />} />
-        <Route exact path="/page" element={<Page />} />
+        <Route exact path="/page" element={userid ? <Page />: <Home/>} />
+        <Route exact path="/requirements" element={userid?<Requirements />: <Home/>} />
+        <Route exact path="/pages" element={userid ? <Pages/>: <Home/>} />
+
+
 
         <Route
           exact

@@ -21,7 +21,8 @@ export default function LoginPage() {
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+
+  const onSubmit = async(data) => {
     console.log(data);
     const UserData = {
       email: data.email,
@@ -45,12 +46,17 @@ export default function LoginPage() {
 
         if (useremail === "admin@gmail.com") {
           navigate("/page");
+          window.location.reload()
+
         } else {
-          navigate("/page");
+          navigate("/pages");
+          window.location.reload()
+
         }
       } else {
         alert("Invalid user");
       }
+      
     });
   };
 

@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
-import Sidemenu from "./Dashboard";
+import Sidemenu from './FacultyDash'
 
 const EditCurriculam = () => {
 
